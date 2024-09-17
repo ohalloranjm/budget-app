@@ -158,3 +158,25 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       }
     }
     ```
+
+### Delete a Budget
+
+- Request
+  - Method: `DELETE`
+  - Route: `/budgets/:budgetId`
+- Successful response
+  - Status code: 200
+  - Body
+    ```json
+    {
+      "message": "Successfully deleted"
+    }
+    ```
+- Error response: Budget not found
+  - Status code: 404
+  - Body
+    ```json
+    {
+      "message": "Budget not found"
+    }
+    ```
