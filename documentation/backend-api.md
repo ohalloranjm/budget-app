@@ -92,8 +92,16 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       }
     }
     ```
+- Error response: Budget month not found
+  - Status code: 404
+  - Body
+    ```json
+    {
+      "message": "Budget month not found"
+    }
+    ```
 
-## Create a New Budget
+### Create a New Budget
 
 - Request
   - Method: `POST`
