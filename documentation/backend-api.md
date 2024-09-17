@@ -27,7 +27,6 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
   - Body:
     ```json
     {
-      "Month": "2024-09",
       "Budgets": [
         {
           "id": 1,
@@ -35,7 +34,8 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
           "allocated": 200,
           "start_date": "03-01-2024",
           "end_date": null,
-          "spent": 105.47
+          "spent": 105.47,
+          "icon": "shopping-bag.png"
         }
       ]
     }
@@ -57,7 +57,8 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
           "id": 1,
           "name": "Groceries",
           "allocated": 200,
-          "spent": 105.47
+          "spent": 105.47,
+          "icon": "shopping-bag.png"
         }
       ]
     }
@@ -79,6 +80,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
         "name": "Groceries",
         "allocated": 200,
         "spent": 105.47,
+        "icon": "shopping-bag.png",
         "Transactions": [
             {
                 "id": 1,
