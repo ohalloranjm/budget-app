@@ -92,3 +92,61 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       }
     }
     ```
+
+## Create a New Budget
+
+- Request
+  - Method: `POST`
+  - Route: `/budgets`
+  - Body:
+    ```json
+    {
+      "name": "Groceries",
+      "allocated": 200,
+      "startDate": "2023-04-01",
+      "endDate": "2024-01-31",
+      "icon": "shopping-bag.png"
+    }
+    ```
+    - Optional fields:
+      - `startDate`: defaults to the first of the current month
+      - `endDate`: blank field or `null` indicates a budget with no defined end date
+- Successful response
+  - Status code: 201
+  - Body:
+    ```json
+    {
+      "message": "Budget successfully created",
+      "Budget": {
+        "id": 1,
+        "name": "Groceries",
+        "allocated": 200,
+        "startDate": "2023-04-01",
+        "endDate": "2024-01-31",
+        "icon": "shopping-bag.png"
+      }
+    }
+    ```
+- Error response: Bad request
+
+  - Status code: 400
+  - Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "errors": {
+        "name": "Name is required",
+        "allocated": "Budget allocation is required",
+        "allocated": "Budget allocation must be a positive number",
+        "startDate": "Start date is required",
+        "startDate": "Date must be in YYYY-MM-DD format",
+        "startDate": "Start date must be the 1st day of a month",
+        "endDate": "Date must be in YYYY-MM-DD format",
+        "endDate": "End date must be the last day of a month",
+        "endDate": "End date cannot be on or before start date",
+        "dateOverlap": "The provided date range overlaps with an existing budget with the same name",
+        "icon": "Icon must be one of <options A, B, etc.>"
+      }
+    }
+    ```
