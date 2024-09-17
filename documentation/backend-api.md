@@ -243,3 +243,61 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       "message": "Budget not found"
     }
     ```
+
+## Transactions
+
+### Add a Transaction to a Budget
+
+- Request
+
+  - Method: `POST`
+  - Route: `budgets/:budgetId/transactions`
+  - Body
+    ```json
+    {
+      "amount": 35.61,
+      "date": "2022-11-19",
+      "name": "Wallmart run",
+      "description": "Dinner for the next week"
+    }
+    ```
+    - Optional fields: `description` (nullable), `date` (defaults to today)
+
+- Successful response
+  - Status code: 201
+  - Body
+    ```json
+    {
+      "message": "Transaction successfully added",
+      "Transaction": {
+        "id": 1,
+        "budgetId": 1,
+        "amount": 35.61,
+        "date": "2022-11-19",
+        "name": "Wallmart run",
+        "description": "dinner for next week"
+      }
+    }
+    ```
+- Error response: Bad request
+  - Status code: 400
+  - Body
+    ```json
+    {
+      "message": "Bad request",
+      "errors": {
+        "amount": "Transaction amount is required",
+        "amount": "Transaction amount must be a number",
+        "date": "Date must be in YYYY-MM-DD format",
+        "date": "Date must be within the budget range"
+      }
+    }
+    ```
+- Error response: Budget not found
+  - Status code: 404
+  - Body
+    ```json
+    {
+      "message": "Budget not found"
+    }
+    ```
