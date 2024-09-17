@@ -31,7 +31,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
         {
           "id": 1,
           "name": "Groceries",
-          "allocated": 200,
+          "allocated": 1000,
           "start_date": "03-01-2024",
           "end_date": null,
           "spent": 105.47,
@@ -56,7 +56,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
         {
           "id": 1,
           "name": "Groceries",
-          "allocated": 200,
+          "allocated": 1000,
           "spent": 105.47,
           "icon": "shopping-bag.png"
         }
@@ -78,7 +78,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       "Budget": {
         "id": 1,
         "name": "Groceries",
-        "allocated": 200,
+        "allocated": 1000,
         "spent": 105.47,
         "icon": "shopping-bag.png",
         "Transactions": [
@@ -110,7 +110,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
     ```json
     {
       "name": "Groceries",
-      "allocated": 200,
+      "allocated": 1000,
       "startDate": "2023-04-01",
       "endDate": "2024-01-31",
       "icon": "shopping-bag.png"
@@ -128,7 +128,7 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
       "Budget": {
         "id": 1,
         "name": "Groceries",
-        "allocated": 200,
+        "allocated": 1000,
         "startDate": "2023-04-01",
         "endDate": "2024-01-31",
         "icon": "shopping-bag.png"
@@ -153,9 +153,72 @@ Unless they do not have a body, **all requests and responses** have a `Content-T
         "endDate": "Date must be in YYYY-MM-DD format",
         "endDate": "End date must be the last day of a month",
         "endDate": "End date cannot be on or before start date",
-        "dateOverlap": "The provided date range overlaps with an existing budget with the same name",
+        "dateRange": "The provided date range overlaps with an existing budget with the same name",
         "icon": "Icon must be one of <options A, B, etc.>"
       }
+    }
+    ```
+
+### Edit a Budget
+
+- Request
+  - Method: `PUT`
+  - Route: `/budgets/:budgetId`
+  - Body
+    ```json
+    {
+      "name": "Clothes",
+      "allocated": 100,
+      "startDate": "2025-01-01",
+      "endDate": "2025-12-31",
+      "icon": "shirt.png"
+    }
+    ```
+    - Optional fields: All (a blank field will not be changed)
+- Successful response
+  - Status code: 200
+  - Body
+    ```json
+    {
+      "message": "Budget successfully updated",
+      "Budget": {
+        "id": 1,
+        "name": "Clothes",
+        "allocated": 100,
+        "startDate": "2025-01-01",
+        "endDate": "2025-12-31",
+        "icon": "shirt.png"
+      }
+    }
+    ```
+- Error response: Bad request
+
+  - Status code: 400
+  - Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "errors": {
+        "allocated": "Budget allocation must be a positive number",
+        "startDate": "Date must be in YYYY-MM-DD format",
+        "startDate": "Start date must be the 1st day of a month",
+        "endDate": "Date must be in YYYY-MM-DD format",
+        "endDate": "End date must be the last day of a month",
+        "endDate": "End date cannot be on or before start date",
+        "dateRange": "The provided date range overlaps with an existing budget with the same name",
+        "dateRange": "The provided date range excludes one or more existing transactions",
+        "icon": "Icon must be one of <options A, B, etc.>"
+      }
+    }
+    ```
+
+- Error response: Budget not found
+  - Status code: 404
+  - Body
+    ```json
+    {
+      "message": "Budget not found"
     }
     ```
 
