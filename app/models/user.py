@@ -31,3 +31,5 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+    
+    budgets = db.relationship("Budget", back_populates="user")
