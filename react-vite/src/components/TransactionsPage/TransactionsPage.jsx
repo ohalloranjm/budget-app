@@ -1,9 +1,11 @@
 import { useLoaderData } from "react-router-dom"
+import TransactionSummary from "./TransactionSummary"
 
 export default function TransactionsPage() {
-    const { Transactions } = useLoaderData()
+    const { Transactions: transactions } = useLoaderData()
+    if (transactions) console.log(transactions)
     return <div>
         <h1>Your Transactions</h1>
-        {Transactions.map(t => <p key={t.id}>{t.name}</p>)}
+        {transactions.map(t => <TransactionSummary key={t.id} transaction={t} />)}
     </div>
 }
