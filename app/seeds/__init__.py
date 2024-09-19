@@ -1,6 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .budgets import seed_budgets, undo_budgets
+from .save_goals import seed_save_goals, undo_save_goals
 from .transactions import seed_transactions, undo_transactions
 from .templates import seed_templates, undo_templates
 
@@ -24,14 +25,16 @@ def seed():
     seed_budgets()
     seed_transactions()
     seed_templates()
+    seed_save_goals()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    undo_budgets()
-    undo_users()
-    undo_transactions()
+    undo_save_goals()
     undo_templates()
+    undo_budgets()
+    undo_transactions()
+    undo_users()
     # Add other undo functions here
