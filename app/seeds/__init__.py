@@ -4,7 +4,7 @@ from .budgets import seed_budgets, undo_budgets
 from .transactions import seed_transactions, undo_transactions
 from .templates import seed_templates, undo_templates
 
-from app.models.db import db, environment, SCHEMA
+from app.models.db import environment
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`

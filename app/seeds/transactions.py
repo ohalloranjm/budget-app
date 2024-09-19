@@ -1,5 +1,4 @@
 from app.models import db, Transaction, environment, SCHEMA
-from .users import demo, marnie, bobbie
 from datetime import datetime
 from sqlalchemy.sql import text
 

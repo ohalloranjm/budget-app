@@ -1,6 +1,4 @@
 from app.models import db, Template, environment, SCHEMA, Budget
-from .users import demo, marnie, bobbie
-from datetime import datetime
 from sqlalchemy.sql import text
 
 demo_templates = [
