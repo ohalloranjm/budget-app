@@ -1,5 +1,5 @@
 from .db import add_prefix_for_prod, db
-
+from app.utils import to_dollars
 
 class Transaction(db.Model):
     __tablename__ = "transactions"
@@ -24,10 +24,21 @@ class Transaction(db.Model):
     def to_dict_simple(self):
         return {
             "id": self.id,
-            "amount": self.amount,
+            "amount": to_dollars(self.amount),
             "date": self.date,
             "name": self.name,
             "description": self.description,
             "user_id": self.user_id,
             "budget_id": self.budget_id,
+        }
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "amount": to_dollars(self.amount),
+            "date": self.date,
+            "name": self.name,
+            "description": self.description,
+            "user_id": self.user_id,
+            "Budget": self.budgets.to_dict_simple()
         }
