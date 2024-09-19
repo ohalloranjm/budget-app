@@ -3,7 +3,7 @@ from .budget_templates import budget_templates
 
 
 class Budget(db.Model):
-    __tablename__ = 'budgets'
+    __tablename__ = "budgets"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     allocated = db.Column(db.Integer, nullable=False)
@@ -12,11 +12,9 @@ class Budget(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     icon = db.Column(db.String(100))
 
-
-    user = db.relationship( "User", back_populates="budgets")
-    transactions = db.relationship('Transaction', back_populates='budgets')
+    user = db.relationship("User", back_populates="budgets")
+    transactions = db.relationship("Transaction", back_populates="budgets")
     templates = db.relationship(
-    "Template",
-    secondary=budget_templates,
-    back_populates="budgets"
+        "Template", secondary=budget_templates, back_populates="budgets"
     )
+    vendors = db.relationship("Vendor", back_populates="budgets")
