@@ -4,10 +4,10 @@ from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
@@ -26,8 +26,11 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'email': self.email
-        }
+        return {"id": self.id, "username": self.username, "email": self.email}
+
+    budgets = db.relationship("Budget", back_populates="user")
+    transactions = db.relationship("Transaction", back_populates="user")
+    templates = db.relationship("Template", back_populates="user")
+    save_goals = db.relationship("SaveGoal", back_populates="user")
+    total_expenses = db.relationship("TotalExpense", back_populates="user")
+    vendors = db.relationship("Vendor", back_populates="user")
