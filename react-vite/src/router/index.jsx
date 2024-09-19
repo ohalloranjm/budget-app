@@ -13,8 +13,7 @@ export const router = createBrowserRouter([
         element: <BudgetsPage></BudgetsPage>,
         loader: async ()=> {
           let res = await fetch('/api/budgets')
-          console.log(res.json())
-          return {Budgets: [{name:'asd'}]}
+          return await res.json()
         }
       },
       {
