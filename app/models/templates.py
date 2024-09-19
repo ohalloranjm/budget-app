@@ -13,5 +13,5 @@ class Template(db.Model):
         "Budget", secondary=budget_templates, back_populates="templates"
     )
 
-    def to_dict(self):
+    def to_dict_simple(self):
         return {"id": self.id, "name": self.name, "user_id": self.user_id}

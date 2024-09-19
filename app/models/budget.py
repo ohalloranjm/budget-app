@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .budget_templates import budget_templates
+from app.utils import to_dollars
 
 
 class Budget(db.Model):
@@ -23,7 +24,7 @@ class Budget(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "allocated": self.allocated,
+            "allocated": to_dollars(self.allocated),
             "start_date": self.start_date,
             "end_date": self.end_date,
             "user_id": self.user_id,

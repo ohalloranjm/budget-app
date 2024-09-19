@@ -14,7 +14,7 @@ class SaveGoal(db.Model):
     icon = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
-    def to_dict(self):
+    def to_dict_simple(self):
         return {
             "id": self.id,
             "name": self.name,

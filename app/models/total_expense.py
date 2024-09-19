@@ -13,7 +13,7 @@ class TotalExpense(db.Model):
 
     user = db.relationship("User", back_populates="total_expenses")
 
-    def to_dict(self):
+    def to_dict_simple(self):
         return {
             "id": self.id,
             "total_budgeted": self.total_budgeted,

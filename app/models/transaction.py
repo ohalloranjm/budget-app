@@ -21,7 +21,7 @@ class Transaction(db.Model):
     budgets = db.relationship("Budget", back_populates="transactions")
     vendors = db.relationship("Vendor", back_populates="transactions")
 
-    def to_dict(self):
+    def to_dict_simple(self):
         return {
             "id": self.id,
             "amount": self.amount,
