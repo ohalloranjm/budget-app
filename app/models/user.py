@@ -36,3 +36,4 @@ class User(db.Model, UserMixin):
     transactions = db.relationship('Transaction', back_populates='user')
     templates = db.relationship( "Template", back_populates="user")
     save_goals = db.relationship("SaveGoal", back_populates='user')
+    total_expenses = db.relationship('TotalExpense', back_populates='user')

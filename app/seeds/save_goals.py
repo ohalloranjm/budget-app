@@ -1,4 +1,4 @@
-from app.models import db, SaveGoal, environment, SCHEMA, Budget
+from app.models import db, SaveGoal, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime, timedelta
 
@@ -8,7 +8,7 @@ demo_save_goals = [
         cost=20000,
         start_date=datetime.now(),
         end_date=datetime.now() + timedelta(days=360),
-        userId=1
+        user_id=1
     ),
     SaveGoal(
         name='Jacket',
@@ -16,7 +16,7 @@ demo_save_goals = [
         cost=20000,
         start_date=datetime.now(),
         end_date=datetime.now() + timedelta(days=360),
-        userId=2
+        user_id=2
     ),
         SaveGoal(
         name='Jacket',
@@ -24,7 +24,7 @@ demo_save_goals = [
         cost=20000,
         start_date=datetime.now(),
         end_date=datetime.now() + timedelta(days=360),
-        userId=1
+        user_id=1
     ),
 ]
 

@@ -26,8 +26,8 @@ def upgrade():
     sa.Column('start_date', sa.DateTime(), nullable=False),
     sa.Column('end_date', sa.DateTime(), nullable=False),
     sa.Column('icon', sa.String(length=100), nullable=True),
-    sa.Column('userId', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
