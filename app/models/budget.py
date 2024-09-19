@@ -18,3 +18,14 @@ class Budget(db.Model):
         "Template", secondary=budget_templates, back_populates="budgets"
     )
     vendors = db.relationship("Vendor", back_populates="budgets")
+
+    def to_dict_simple(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "allocated": self.allocated,
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "user_id": self.user_id,
+            "icon": self.icon,
+        }

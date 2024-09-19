@@ -1,4 +1,4 @@
-from .db import db, add_prefix_for_prod
+from .db import add_prefix_for_prod, db
 
 
 class Vendor(db.Model):
@@ -19,3 +19,9 @@ class Vendor(db.Model):
     user = db.relationship("User", back_populates="vendors")
     budgets = db.relationship("Budget", back_populates="vendors")
     transactions = db.relationship("Transaction", back_populates="vendors")
+
+    def to_dict_simple(self):
+        return {
+            "vendor_name": self.vendor_name,
+            "budget_name": self.budget_name,
+        }
