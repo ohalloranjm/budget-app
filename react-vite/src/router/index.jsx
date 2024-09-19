@@ -13,7 +13,10 @@ export const router = createBrowserRouter([
         element: <BudgetsPage></BudgetsPage>,
         loader: async ()=> {
           let res = await fetch('/api/budgets')
-          return await res.json()
+          if (res.ok) {
+            return await res.json()
+          }
+          return false
         }
       },
       {

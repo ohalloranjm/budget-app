@@ -5,9 +5,9 @@ import { useModal } from "../../context/Modal";
 import { useLoaderData } from "react-router-dom";
 
 export default function BudgetsPage() {
-    const budgets = useLoaderData().Budgets
+    const budgets = useLoaderData()?.Budgets
 
-    return <div className="primary-dark">
+    if (budgets) return <div className="primary-dark">
         {budgets.map(budget=> {
             return <div>
                 <h2>{budget.name}</h2>
@@ -15,4 +15,6 @@ export default function BudgetsPage() {
             </div>
         })}
     </div>
+
+    return null
 }
