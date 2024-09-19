@@ -2,17 +2,16 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
 import { useLoaderData } from "react-router-dom";
 
-function LoginFormModal() {
+export default function BudgetsPage() {
     // const budgets = useLoaderData()
 
     return <div className="primary-dark">
-        {/* {budgets.map(budget=> {
+        {budgets.map(budget=> {
             return <div>
                 <h2>{budget.name}</h2>
             </div>
-        })} */}
+        })}
     </div>
 }

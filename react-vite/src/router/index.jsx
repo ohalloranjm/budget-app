@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
+import BudgetsPage from '../components/BudgetsPage'
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -9,11 +10,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1 className=''>Welcome!</h1>,
-        // loader: async ()=> {
-        //   // let res = await fetch('api/budgets')
-        //   // return await res.json()
-        // }
+        element: <BudgetsPage></BudgetsPage>,
+        loader: async ()=> {
+          let res = await fetch('/api/budgets')
+          console.log(res.json())
+          return {Budgets: [{name:'asd'}]}
+        }
       },
       {
         path: "login",
