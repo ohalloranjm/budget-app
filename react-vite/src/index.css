@@ -1,1 +1,50 @@
-/* TODO: Add sitewide styles */
+body{
+
+}
+
+/* primar light theme */
+.primary {
+    /* primary WHITE-like VV */
+    background-color: azure; 
+    /*           VV VV VV VV primary BLACK-like */
+    color: rgb(31, 32, 30);
+}
+
+.secondary {
+    background-color: azure;
+     /*           VV VV VV VV primary COLORED-like */
+    color: rgb(94, 255, 0);
+    text-shadow: 0px 0px 5px rgb(31, 32, 30);
+}
+
+.alert {
+    background-color: rgb(94, 255, 0);
+    color: azure;
+    text-shadow: 0px 0px 5px rgb(31, 32, 30);
+}
+
+.alert-text {
+    color: azure;
+    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+}
+
+.primary-dark {
+    background-color: rgb(31, 32, 30);
+    color: azure;
+}
+
+.secondary-dark {
+    background-color: rgb(31, 32, 30);
+    color: rgb(94, 255, 0);
+}
+
+.alert-dark {
+    background-color: rgb(94, 255, 0);
+    color: azure;
+    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+}
+
+.alert-text-dark {
+    color: azure;
+    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+}

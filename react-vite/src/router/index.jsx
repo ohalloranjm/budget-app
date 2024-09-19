@@ -9,7 +9,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <h1 className=''>Welcome!</h1>,
+        // loader: async ()=> {
+        //   // let res = await fetch('api/budgets')
+        //   // return await res.json()
+        // }
       },
       {
         path: "login",
