@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import BudgetsPage from '../components/BudgetsPage'
+import TransactionsPage from '../components/TransactionsPage';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -13,6 +14,17 @@ export const router = createBrowserRouter([
         element: <BudgetsPage></BudgetsPage>,
         loader: async ()=> {
           let res = await fetch('/api/budgets')
+          if (res.ok) {
+            return await res.json()
+          }
+          return false
+        }
+      },
+      {
+        path: '/transactions',
+        element: <TransactionsPage />,
+        loader: async () => {
+          const res = await fetch('/api/transactions')
           if (res.ok) {
             return await res.json()
           }
