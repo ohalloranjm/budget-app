@@ -3,3 +3,4 @@ from .user import User
 from .db import environment, SCHEMA
 from .budget import Budget
 from .transaction import Transaction
+from .templates import Template

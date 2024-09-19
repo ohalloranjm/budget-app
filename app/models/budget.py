@@ -1,4 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .budget_templates import budget_templates
+
 
 class Budget(db.Model):
     __tablename__ = 'budgets'
@@ -12,4 +14,9 @@ class Budget(db.Model):
 
 
     user = db.relationship( "User", back_populates="budgets")
-    transactions = db.relationship('Transaction', back_populates='budget')
+    transactions = db.relationship('Transaction', back_populates='budgets')
+    templates = db.relationship(
+    "Template",
+    secondary=budget_templates,
+    back_populates="budgets"
+    )
