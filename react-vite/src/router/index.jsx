@@ -31,7 +31,6 @@ export const router = createBrowserRouter([
           return false
         },
         action: async ({request: req}) => {
-          console.log(req)
           if (req.method?.toLowerCase() === 'delete') {
             const { id } = await req.json()
             const res = await fetch(`/api/transactions/${id}`, {
@@ -51,6 +50,16 @@ export const router = createBrowserRouter([
           const res = await fetch('/api/budgets')
           const data = await res.json()
           return data
+        },
+        action: async ({request: req}) => {
+          const { budgetName, transaction: body } = await req.json()
+          const res = await fetch(`/api/budgets/${budgetName}/transactions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body
+          })
         }
       },
       {

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useSubmit } from "react-router-dom"
 
 const formatDate = function(date) {
     const year = date.getFullYear()
@@ -11,10 +11,13 @@ const formatDate = function(date) {
 }
 
 export default function TransactionsForm() {
+    const submit = useSubmit()
+
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [description, setDescription] = useState('')
     const [date, setDate] = useState(formatDate(new Date()))
+    const [budgetName, setBudgetName] = useState('')
 
     const { Budgets } = useLoaderData()
     const budgetCategories = new Set(Budgets.map(b => b.name))
@@ -44,12 +47,17 @@ export default function TransactionsForm() {
             placeholder='Description'
             onChange={e => setDescription(e.target.value)}
         />
-        <select>
+        <select value={budgetName} onChange={e => setBudgetName(e.target.value)}>
             {budgetCategories.values().toArray().sort().map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <button 
             type='submit'
-            onClick={e => e.preventDefault()}
+            onClick={e => {
+                e.preventDefault()
+
+                const transaction = { name, amount, date, description }
+                submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
+            }}
         >Submit</button>
     </form>
 }
