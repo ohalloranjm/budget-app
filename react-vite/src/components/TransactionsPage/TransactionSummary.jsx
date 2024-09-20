@@ -1,9 +1,11 @@
+import { useSubmit } from "react-router-dom"
+
 export default function TransactionSummary({ transaction }) {
+
+    const submit = useSubmit()
     
     function formatDate(dateStr) {
         const date = new Date(dateStr)
-        // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        // const month = months[date.getMonth()]
         const month = date.getMonth() + 1
         const day = date.getDate()
         const year = date.getFullYear()
@@ -15,5 +17,10 @@ export default function TransactionSummary({ transaction }) {
         <p>{formatDate(transaction.date)}</p>
         <p>${transaction.amount}</p>
         <p>{transaction.Budget?.name}</p>
+        <button onClick={(e) => {
+            e.preventDefault()
+            console.log('Successfully executing function')
+            submit({id: transaction.id}, {'method': 'delete', encType: 'application/json'})
+        }}>Delete</button>
     </div>
 }
