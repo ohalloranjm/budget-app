@@ -26,6 +26,7 @@ def get_user_budgets():
     budgets = Budget.query.filter(Budget.user_id == user["id"]).all()
     return {"Budgets": [budget.to_dict_simple() for budget in budgets]}
 
+# add a transaction to a budget by budget id
 @budget_routes.route('/<int:budget_id>/transactions', methods=['POST'])
 @login_required
 def post_transaction_to_budget(budget_id):
@@ -37,8 +38,45 @@ def post_transaction_to_budget(budget_id):
     if not budget.user_id == current_user.id:
         return {'errors': {'message': 'Unauthorized'}}, 401
     
-    form = TransactionForm(user_id=1,budget_id=budget_id)
+    form = TransactionForm(user_id=current_user.id,budget_id=budget_id)
     
+    if form.validate_on_submit():
+        transaction = Transaction()
+        form.populate_obj(transaction)
+        budget.transactions.append(transaction)
+        db.session.commit()
+        return transaction.to_dict_simple()
+    if form.errors:
+        return form.errors, 400
+    
+# add a transaction to a budget by budget name
+@budget_routes.route('/<budget_name>/transactions', methods=['POST'])
+@login_required
+def post_transaction_to_budget_by_name(budget_name):
+
+    budgets_in_category = Budget.query.filter(Budget.name == budget_name and Budget.user_id == current_user.id)
+
+    if not len(budgets_in_category):
+        return {'errors': {'message': 'User does not have any budgets with that name'}}, 404
+
+    demo_form = TransactionForm(user_id=current_user.id)
+    demo_transaction = Transaction()
+    demo_form.populate_obj(demo_transaction)
+
+    def valid_date(budget):
+        if budget.start_date > demo_transaction.date:
+            return False
+        if budget.end_date and budget.end_date < demo_transaction.date:
+            return False
+        return True
+
+    valid_budgets = filter(valid_date, budgets_in_category)
+    
+    if not len(valid_budgets):
+        return {'errors': {'date': f'{budget_name} date range does not include {demo_transaction.date}'}}, 400
+
+    budget = valid_budgets[0]
+    form = TransactionForm(user_id=current_user.id,budget_id=budget.id)
     if form.validate_on_submit():
         transaction = Transaction()
         form.populate_obj(transaction)
