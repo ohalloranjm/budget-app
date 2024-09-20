@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import BudgetsPage from '../components/BudgetsPage'
 import TransactionsPage from '../components/TransactionsPage';
 import Layout from './Layout';
+import TransactionsForm from '../components/TransactionsForm';
 
 export const router = createBrowserRouter([
   {
@@ -41,9 +42,12 @@ export const router = createBrowserRouter([
             })
             return res
           }
-
-
         }
+      },
+      {
+        path: '/transactions/new',
+        element: <TransactionsForm />
+        
       },
       {
         path: "login",
