@@ -1,12 +1,16 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useSubmit } from "react-router-dom"
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import TransactionSummary from "./TransactionSummary"
 import './TransactionsPage.css'
 
 export default function TransactionsPage() {
+    const user = useSelector(store => store.session.user)
     const { Transactions } = useLoaderData()
+    const submit = useSubmit()
     useEffect(() => {
-    }, [Transactions])
+        submit()
+    }, [user, submit])
 
     if (!Transactions) return null
     return <div>

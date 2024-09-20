@@ -25,9 +25,8 @@ export const router = createBrowserRouter([
         element: <TransactionsPage />,
         loader: async () => {
           const res = await fetch('/api/transactions')
-          if (res.ok) {
-            return await res.json()
-          }
+          const data = await res.json()
+          if (res.ok) return data
           return false
         }
       },
