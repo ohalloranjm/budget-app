@@ -31,8 +31,12 @@ def get_user_budgets():
 @budget_routes.route('/<int:id>')
 @login_required
 def budget(id):
-
+  
     budget = Budget.query.get(id)
+
+    if not budget:
+        return {"error": "Budget not found"}, 404
+    
     return budget.to_dict_simple()
 
 
@@ -52,14 +56,38 @@ def create_budget():
         db.session.add(new_budget)
         db.session.commit()
 
-        print(new_budget.to_dict_simple())
+        # print(new_budget.to_dict_simple())
         return new_budget.to_dict_simple(), 201
     
     if form.errors:
         return {"errors": format_errors(form.errors)}, 400
     
     return
-    
+
+# Edit an existing budget for the current user.
+@budget_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def edit_budget(id):
+    budget = Budget.query.get(id)
+
+    if not budget or budget.user_id != current_user.id:
+        return {"error": "Budget not found or access denied"}, 404
+
+    form = BudgetForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        form.populate_obj(budget)
+
+        db.session.commit()
+
+        return budget.to_dict_simple(), 200
+
+    if form.errors:
+        return {"errors": format_errors(form.errors)}, 400
+
+    return {"error": "Invalid request"}, 400
+
 
 # Delete a budget
 @budget_routes.route('/<int:id>', methods=['DELETE'])
