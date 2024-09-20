@@ -4,6 +4,11 @@ export default function TransactionSummary({ transaction }) {
 
     const submit = useSubmit()
     
+    function deleteTransaction(e) {
+            e.preventDefault()
+            submit({id: transaction.id}, {method: 'delete', encType: 'application/json'})
+    }
+
     function formatDate(dateStr) {
         const date = new Date(dateStr)
         const month = date.getMonth() + 1
@@ -17,10 +22,6 @@ export default function TransactionSummary({ transaction }) {
         <p>{formatDate(transaction.date)}</p>
         <p>${transaction.amount}</p>
         <p>{transaction.Budget?.name}</p>
-        <button onClick={(e) => {
-            e.preventDefault()
-            console.log('Successfully executing function')
-            submit({id: transaction.id}, {'method': 'delete', encType: 'application/json'})
-        }}>Delete</button>
+        <button onClick={deleteTransaction}>Delete</button>
     </div>
 }

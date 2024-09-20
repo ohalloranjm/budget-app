@@ -29,16 +29,16 @@ export const router = createBrowserRouter([
           if (res.ok) return data
           return false
         },
-        action: async ({req}) => {
-          if (req.method.toLowerCase() === 'delete') {
+        action: async ({request: req}) => {
+          console.log(req)
+          if (req.method?.toLowerCase() === 'delete') {
             const { id } = await req.json()
             const res = await fetch(`/api/transactions/${id}`, {
               method: 'DELETE',
               headers: {
                 'Content-Type': 'application/json'
               }
-            }
-            )
+            })
             return res
           }
 
