@@ -16,3 +16,4 @@ def get_user_templates():
 @template_routes.route("/<int:template_id>")
 def get_template_by_id(template_id):
     template = Template.query.get(template_id)
+    return template.to_dict()
