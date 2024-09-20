@@ -8,7 +8,9 @@ class Template(db.Model):
     name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
-    user = db.relationship("User", back_populates="templates")
+    user = db.relationship(
+        "User", back_populates="templates", cascade="all, delete-orphan"
+    )
     budgets = db.relationship(
         "Budget", secondary=budget_templates, back_populates="templates"
     )
