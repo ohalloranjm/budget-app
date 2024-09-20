@@ -21,7 +21,6 @@ export default function TransactionsForm() {
 
     const { Budgets } = useLoaderData()
     const budgetCategories = new Set(Budgets.map(b => b.name))
-    console.log(budgetCategories.keys())
 
     return <form>
       <input 
@@ -48,13 +47,14 @@ export default function TransactionsForm() {
             onChange={e => setDescription(e.target.value)}
         />
         <select value={budgetName} onChange={e => setBudgetName(e.target.value)}>
+            <option value=''>-</option>
             {budgetCategories.values().toArray().sort().map(c => <option key={c} value={c}>{c}</option>)}
         </select>
         <button 
             type='submit'
             onClick={e => {
                 e.preventDefault()
-
+                console.log({name, amount, description, date, budgetName})
                 const transaction = { name, amount, date, description }
                 submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
             }}

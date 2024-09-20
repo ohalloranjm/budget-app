@@ -52,7 +52,8 @@ export const router = createBrowserRouter([
           return data
         },
         action: async ({request: req}) => {
-          const { budgetName, transaction: body } = await req.json()
+          const { budgetName, transaction } = await req.json()
+          const body = JSON.stringify(transaction)
           const res = await fetch(`/api/budgets/${budgetName}/transactions`, {
             method: 'POST',
             headers: {
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
             },
             body
           })
+          return await res.json()
         }
       },
       {
