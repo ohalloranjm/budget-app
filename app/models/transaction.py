@@ -19,7 +19,7 @@ class Transaction(db.Model):
     user = db.relationship("User", back_populates="transactions")
 
     budgets = db.relationship("Budget", back_populates="transactions")
-    vendors = db.relationship("Vendor", back_populates="transactions")
+    vendors = db.relationship("Vendor", back_populates="transactions", cascade='all, delete-orphan')
 
     def to_dict_simple(self):
         return {
