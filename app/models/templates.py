@@ -15,3 +15,10 @@ class Template(db.Model):
 
     def to_dict_simple(self):
         return {"id": self.id, "name": self.name, "user_id": self.user_id}
+
+    def to_dict(self):
+        return {
+            **self.to_dict_simple(),
+            "Budgets": [budget.to_dict_simple() for budget in self.budgets],
+            "Creator": self.user.to_dict(),
+        }
