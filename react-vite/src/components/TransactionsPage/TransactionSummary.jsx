@@ -12,7 +12,7 @@ export default function TransactionSummary({ transaction }) {
         return `${month}/${day < 10 ? '0' : ''}${day}/${year}`
     }
     
-    return <div className='transaction-summary-tile' onClick>
+    return <div className='transaction-summary-tile'>
         <h3>{transaction.name}</h3>
         <p>{formatDate(transaction.date)}</p>
         <p>${transaction.amount}</p>
