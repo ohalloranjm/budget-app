@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from app.models import db, Budget
 from flask_login import current_user, login_required
-from ..forms import BudgetForm
+from app.forms import BudgetForm
 
 budget_routes = Blueprint("budgets", __name__)
 
@@ -36,19 +36,23 @@ def budget(id):
     return budget.to_dict_simple()
 
 
-# Create a new budget from scratch for the current user.
+# Create a new budget for the current user.
 @budget_routes.route('/', methods=['POST'])
 @login_required
 def create_budget():
 
     form = BudgetForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
     if form.validate_on_submit():
         new_budget = Budget()
+
         form.populate_obj(new_budget)
-        
+
         db.session.add(new_budget)
         db.session.commit()
-        
+
+        print(new_budget.to_dict_simple())
         return new_budget.to_dict_simple(), 201
     
     if form.errors:
@@ -64,9 +68,9 @@ def delete_budget(id):
     budget = Budget.query.get(id)
 
     if not budget or budget.user_id != current_user.id:
-        return jsonify({'error': 'Budget not found or access denied.'}), 404
+        return {'error': 'Budget not found or access denied.'}, 404
 
     db.session.delete(budget)
     db.session.commit()
 
-    return jsonify({'message': 'Budget deleted successfully.'})
+    return {'message': 'Budget deleted successfully.'}
