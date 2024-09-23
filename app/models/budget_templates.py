@@ -1,4 +1,4 @@
-from .db import db, add_prefix_for_prod
+from .db import db, add_prefix_for_prod, environment, SCHEMA
 
 budget_templates = db.Table(
   "budget_templates",
@@ -13,3 +13,6 @@ budget_templates = db.Table(
     db.ForeignKey(add_prefix_for_prod("budgets.name")),
   )
 )
+
+if environment == "production":
+    budget_templates.schema = SCHEMA

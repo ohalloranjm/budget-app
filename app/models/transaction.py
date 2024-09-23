@@ -1,8 +1,11 @@
-from .db import add_prefix_for_prod, db
+from .db import add_prefix_for_prod, db, environment, SCHEMA
 from app.utils import to_dollars
 
 class Transaction(db.Model):
     __tablename__ = "transactions"
+
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
