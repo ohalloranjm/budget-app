@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useLoaderData, useSubmit } from "react-router-dom"
+import toCents from "../../utils/to-cents"
 
 const formatDate = function(date) {
     const year = date.getFullYear()
@@ -55,7 +56,7 @@ export default function TransactionsForm() {
             onClick={e => {
                 e.preventDefault()
                 console.log({name, amount, description, date, budgetName})
-                const transaction = { name, amount, date, description }
+                const transaction = { name, amount: toCents(amount), date, description }
                 submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
             }}
         >Submit</button>
