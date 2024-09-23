@@ -31,7 +31,7 @@ def get_template_by_id(template_id):
 def delete_template(template_id):
     template = Template.query.get(template_id)
     if not template:
-        {"errors": {"message": "Template not found"}}, 404
+        return {"errors": {"message": "Template not found"}}, 404
     if not template.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
@@ -42,6 +42,7 @@ def delete_template(template_id):
 
 
 @template_routes.route("/", methods=["post"])
+@login_required
 def post_new_template():
     """
     Create a new Template
@@ -50,9 +51,10 @@ def post_new_template():
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        new_template = TemplateForm()
+        new_template = Template()
 
         form.populate_obj(new_template)
+        new_template.user_id = current_user.to_dict()["id"]
 
         db.session.add(new_template)
         db.session.commit()
