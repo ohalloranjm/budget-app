@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from app.models import db, Template
 from flask_login import current_user, login_required
+from ..forms import TemplateForm
 
 template_routes = Blueprint("templates", __name__)
 
@@ -45,3 +46,20 @@ def post_new_template():
     """
     Create a new Template
     """
+    form = TemplateForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        new_template = TemplateForm()
+
+        form.populate_obj(new_template)
+
+        db.session.add(new_template)
+        db.session.commit()
+
+        return new_template.to_dict_simple(), 201
+
+    if form.errors:
+        return {"errors": form.errors}, 400
+
+    return
