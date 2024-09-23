@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import BudgetsPage from '../components/BudgetsPage'
@@ -61,6 +61,7 @@ export const router = createBrowserRouter([
             },
             body
           })
+          if (res.ok) return redirect('/transactions')
           return await res.json()
         }
       },

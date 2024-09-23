@@ -12,9 +12,8 @@ export default function TransactionsForm() {
     const [date, setDate] = useState(formatDateInternal(new Date()))
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
-    console.log(errors)
-
     const { Budgets } = useLoaderData()
+
     const budgetCategories = new Set(Budgets.map(b => b.name))
 
     const submitForm = e => {
