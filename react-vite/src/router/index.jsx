@@ -46,6 +46,7 @@ export const router = createBrowserRouter([
       {
         path: '/transactions/new',
         element: <TransactionsForm />,
+        // errorElement: <TransactionsForm />,
         loader: async () => {
           const res = await fetch('/api/budgets')
           const data = await res.json()
@@ -61,7 +62,8 @@ export const router = createBrowserRouter([
             },
             body
           })
-          return await res.json()
+          if (res.ok) return await res.json()
+          throw res
         }
       },
       {

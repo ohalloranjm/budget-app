@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useLoaderData, useSubmit } from "react-router-dom"
+import { useLoaderData, useSubmit, useRouteError } from "react-router-dom"
 import toCents from "../../utils/to-cents"
 import { formatDateInternal } from "../../utils/format-date"
 
@@ -12,8 +12,22 @@ export default function TransactionsForm() {
     const [date, setDate] = useState(formatDateInternal(new Date()))
     const [budgetName, setBudgetName] = useState('')
 
+    // const error = useRouteError()
+    // console.error('this is my error:', error)
+
     const { Budgets } = useLoaderData()
     const budgetCategories = new Set(Budgets.map(b => b.name))
+
+    const submitForm = e => {
+        e.preventDefault()
+        const transaction = { name, amount: toCents(amount), date, description }
+        try {
+            submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
+        } catch(err) {
+            console.log('The error has been caught')
+            console.error(err)
+        }
+    }
 
     return <form>
       <input 
@@ -45,12 +59,7 @@ export default function TransactionsForm() {
         </select>
         <button 
             type='submit'
-            onClick={e => {
-                e.preventDefault()
-                console.log({name, amount, description, date, budgetName})
-                const transaction = { name, amount: toCents(amount), date, description }
-                submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
-            }}
+            onClick={submitForm}
         >Submit</button>
     </form>
 }
