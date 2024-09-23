@@ -59,13 +59,6 @@ def post_transaction_to_budget_by_name(budget_name):
     if not len(list(budgets_in_category)):
         return {'errors': {'message': 'User does not have any budgets with that name'}}, 404
 
-    # try:
-    #     print('whats wrong babe')
-    #     demo_form = TransactionForm(user_id=current_user.id,budget_id=1)
-    #     print('lovely to see that worked')
-    # except Exception as e:
-    #     print(e)
-
     demo_form = TransactionForm(user_id=current_user.id,budget_id=1)
     demo_transaction = Transaction()
     demo_form.populate_obj(demo_transaction)
@@ -82,11 +75,9 @@ def post_transaction_to_budget_by_name(budget_name):
     if not len(valid_budgets):
         return {'errors': {'date': f'{budget_name} date range does not include {demo_transaction.date}'}}, 400
 
-    print(valid_budgets)
     budget = valid_budgets[0]
-    print('before the storm')
     form = TransactionForm(user_id=current_user.id,budget_id=budget.id)
-    print('after the storm')
+    form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         transaction = Transaction()
         form.populate_obj(transaction)
