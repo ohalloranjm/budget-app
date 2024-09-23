@@ -73,7 +73,13 @@ def post_transaction_to_budget_by_name(budget_name):
     valid_budgets = [ budget for budget in budgets_in_category if valid_date(budget) ]
 
     if not len(valid_budgets):
-        return {'errors': {'date': f'{budget_name} date range does not include {demo_transaction.date}'}}, 400
+        demo_form.validate_on_submit()
+        if demo_form.errors:
+            errors = dict(demo_form.errors)
+            errors['date'] = f'{budget_name} date range does not include {demo_transaction.date}'
+            print(errors)
+            return errors, 400
+        return {'date': f'{budget_name} date range does not include {demo_transaction.date}'}, 400
 
     budget = valid_budgets[0]
     form = TransactionForm(user_id=current_user.id,budget_id=budget.id)
