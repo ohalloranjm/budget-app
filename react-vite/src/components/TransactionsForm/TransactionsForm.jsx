@@ -12,8 +12,7 @@ export default function TransactionsForm() {
     const [date, setDate] = useState(formatDateInternal(new Date()))
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
-    
-    console.error('this is my error:', errors)
+    console.log(errors)
 
     const { Budgets } = useLoaderData()
     const budgetCategories = new Set(Budgets.map(b => b.name))
@@ -51,6 +50,7 @@ export default function TransactionsForm() {
             placeholder='Description'
             onChange={e => setDescription(e.target.value)}
         />
+        <p className='error'>{errors.description ?? ''}</p>
         <select value={budgetName} onChange={e => setBudgetName(e.target.value)}>
             <option value=''>-</option>
             {budgetCategories.values().toArray().sort().map(c => <option key={c} value={c}>{c}</option>)}
