@@ -4,6 +4,8 @@ import SignupFormPage from '../components/SignupFormPage';
 import BudgetsPage from '../components/BudgetsPage'
 import TransactionsPage from '../components/TransactionsPage';
 import Layout from './Layout';
+import TransactionsForm from '../components/TransactionsForm';
+import api from '../api';
 
 export const router = createBrowserRouter([
   {
@@ -12,38 +14,19 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <BudgetsPage></BudgetsPage>,
-        loader: async ()=> {
-          let res = await fetch('/api/budgets')
-          if (res.ok) {
-            return await res.json()
-          }
-          return false
-        }
+        loader: api.getBudgets
       },
       {
         path: '/transactions',
         element: <TransactionsPage />,
-        loader: async () => {
-          const res = await fetch('/api/transactions')
-          const data = await res.json()
-          if (res.ok) return data
-          return false
-        },
-        action: async ({request: req}) => {
-          console.log(req)
-          if (req.method?.toLowerCase() === 'delete') {
-            const { id } = await req.json()
-            const res = await fetch(`/api/transactions/${id}`, {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-            return res
-          }
-
-
-        }
+        loader: api.getTransactions,
+        action: api.deleteTransaction
+      },
+      {
+        path: '/transactions/new',
+        element: <TransactionsForm />,
+        loader: api.getBudgets,
+        action: api.postTransactionToBudget
       },
       {
         path: "login",

@@ -1,4 +1,4 @@
-import { useLoaderData, useSubmit } from "react-router-dom"
+import { Link, useLoaderData, useSubmit } from "react-router-dom"
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import TransactionSummary from "./TransactionSummary"
@@ -15,6 +15,7 @@ export default function TransactionsPage() {
     if (!Transactions) return null
     return <div>
         <h1>My Transactions</h1>
+        <Link to='new'>Input a New Transaction</Link>
         {Transactions.map(t => <TransactionSummary key={t.id} transaction={t} />)}
     </div>
 }
