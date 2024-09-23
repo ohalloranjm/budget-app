@@ -63,7 +63,9 @@ export const router = createBrowserRouter([
             body
           })
           if (res.ok) return await res.json()
-          throw res
+          const e = Error();
+          e.errors = await res.json();
+          throw e
         }
       },
       {

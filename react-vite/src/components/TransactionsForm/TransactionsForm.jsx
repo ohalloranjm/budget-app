@@ -12,8 +12,8 @@ export default function TransactionsForm() {
     const [date, setDate] = useState(formatDateInternal(new Date()))
     const [budgetName, setBudgetName] = useState('')
 
-    // const error = useRouteError()
-    // console.error('this is my error:', error)
+    const error = useRouteError()
+    console.error('this is my error:', error)
 
     const { Budgets } = useLoaderData()
     const budgetCategories = new Set(Budgets.map(b => b.name))
@@ -21,12 +21,12 @@ export default function TransactionsForm() {
     const submitForm = e => {
         e.preventDefault()
         const transaction = { name, amount: toCents(amount), date, description }
-        try {
-            submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
-        } catch(err) {
-            console.log('The error has been caught')
-            console.error(err)
-        }
+        // try {
+        submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
+        // } catch(err) {
+        //     console.log('The error has been caught')
+        //     console.error(err)
+        // }
     }
 
     return <form>
