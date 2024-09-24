@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import db, Budget,Template,Transaction
+from app.models import db, Budget,Template
 from flask_login import current_user, login_required
 from app.forms import BudgetForm
 
@@ -130,8 +130,6 @@ def delete_budget(id):
 
     if not budget or budget.user_id != current_user.id:
         return {'error': 'Budget not found or access denied.'}, 404
-    
-    Transaction.query.filter_by(budget_id=id).delete()
 
     db.session.delete(budget)
     db.session.commit()
