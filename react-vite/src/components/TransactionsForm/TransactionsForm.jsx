@@ -23,7 +23,7 @@ export default function TransactionsForm({edit}) {
             setDate(formatDateInternal(new Date(og.date)))
             setBudgetName(og.Budget.name)
         }
-    }, [edit, data])
+    }, [])
     
     const Budgets = edit ? data[0].Budgets : data.Budgets
 
