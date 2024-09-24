@@ -7,6 +7,7 @@ template_routes = Blueprint("templates", __name__)
 
 
 @template_routes.route("/")
+@login_required
 def get_user_templates():
     """
     Get all templates made by a specific user
