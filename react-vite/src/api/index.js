@@ -1,4 +1,5 @@
 import getBudgets from './get-budgets.js';
+import getTransaction from './get-transaction.js';
 import getTransactions from './get-transactions.js';
 import postTransactionToBudget from './post-transaction-to-budget.js';
 import deleteTransaction from './delete-transaction.js';
