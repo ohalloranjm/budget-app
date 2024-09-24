@@ -1,7 +1,8 @@
 from flask import Blueprint, request
 from app.models import db, SaveGoal
 from flask_login import current_user, login_required
-from ..forms import save_goal_form
+from ..forms import SaveGoalForm
+from datetime import datetime
 
 save_goal_routes = Blueprint("templates", __name__)
 
@@ -43,3 +44,29 @@ def delete_save_goal(save_goal_id):
     db.session.delete(save_goal)
     db.session.commit()
     return {"message": "Save goal successfully deleted", "Save goal": temp}
+
+@save_goal_routes.route("/", methods=["POST"])
+@login_required
+def post_new_save_goal():
+    """
+    Create a new Save goal
+    """
+    form = SaveGoalForm()
+    form["csrf_token"].data = request.cookies["csrf_token"]
+
+    if form.validate_on_submit():
+        new_save_goal = SaveGoal()
+
+        form.populate_obj(new_save_goal)
+        new_save_goal.user_id = current_user.to_dict()["id"]
+        new_save_goal.start_date = datetime.now()
+
+        db.session.add(new_save_goal)
+        db.session.commit()
+
+        return new_save_goal.to_dict_simple(), 201
+
+    if form.errors:
+        return {"errors": form.errors}, 400
+
+    return
