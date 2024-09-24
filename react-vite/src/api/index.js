@@ -2,6 +2,7 @@ import getBudgets from './get-budgets.js';
 import getTransaction from './get-transaction.js';
 import getTransactions from './get-transactions.js';
 import postTransactionToBudget from './post-transaction-to-budget.js';
+import putTransaction from './put-transaction.js';
 import deleteTransaction from './delete-transaction.js';
 
 const all = (...routes) =>
@@ -18,6 +19,7 @@ const api = {
   getBudgets,
   getTransaction,
   getTransactions,
+  putTransaction,
   postTransactionToBudget,
   deleteTransaction,
 };

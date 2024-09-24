@@ -52,7 +52,7 @@ def edit_transaction(id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     old_budget_name = transaction.budgets.name
-    new_budget_name = request.json['budget_name']
+    new_budget_name = request.json['budgetName']
     change_budget_name = old_budget_name != new_budget_name
 
     old_date = str(transaction.date)[:10]
