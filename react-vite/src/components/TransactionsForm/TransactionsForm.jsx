@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useLoaderData, useSubmit, useActionData } from "react-router-dom"
 import toCents from "../../utils/to-cents"
-import { formatDateInternal } from "../../utils/format-date"
+import { formatDateInternal, todayInternal } from "../../utils/format-date"
 
 export default function TransactionsForm({edit}) {
 
@@ -10,7 +10,7 @@ export default function TransactionsForm({edit}) {
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState(formatDateInternal(new Date()))
+    const [date, setDate] = useState(todayInternal())
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
     const data = useLoaderData()
