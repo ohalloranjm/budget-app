@@ -48,7 +48,7 @@ def delete_save_goal(save_goal_id):
 @login_required
 def edit_save_goal_by_id(save_goal_id):
     """
-    Get details of a specific save goal by its ID
+    Edit details of a specific save goal by its ID
     """
     save_goal = SaveGoal.query.get(save_goal_id)
     if not save_goal:
