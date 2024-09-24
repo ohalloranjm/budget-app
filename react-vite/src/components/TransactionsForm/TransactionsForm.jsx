@@ -18,11 +18,13 @@ export default function TransactionsForm({edit}) {
 
     if (edit) {
         Budgets = data[0].Budgets
+        console.log(data[1])
     } else {
         Budgets = data.Budgets
     }
 
     console.log(Budgets)
+    console.log()
 
     const budgetCategories = new Set(Budgets.map(b => b.name))
 

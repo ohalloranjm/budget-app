@@ -1,5 +1,5 @@
-export default async function getTransaction({ request: req }) {
-  const { transactionId } = await req.json();
+export default async function getTransaction({ params }) {
+  const { transactionId } = params;
   const res = await fetch(`/api/transactions/${transactionId}`);
   return await res.json();
 }

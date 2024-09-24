@@ -5,10 +5,10 @@ import postTransactionToBudget from './post-transaction-to-budget.js';
 import deleteTransaction from './delete-transaction.js';
 
 const all = (...routes) =>
-  async function () {
+  async function (param) {
     const res = [];
     for (const route of routes) {
-      res.push(await route());
+      res.push(await route(param));
     }
     return res;
   };

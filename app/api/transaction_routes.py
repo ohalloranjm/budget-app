@@ -14,8 +14,8 @@ def get_user_transactions():
 
 @transaction_routes.route('/<int:id>')
 @login_required
-def get_transaction():
-    transaction = Transaction.get(id)
+def get_transaction(id):
+    transaction = Transaction.query.get(id)
     if not transaction:
         return {'errors': {'message': 'Transaction not found'}}, 404
     if transaction.user_id != current_user.id:

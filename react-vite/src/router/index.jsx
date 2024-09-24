@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
       {
         path: '/transactions/:transactionId/edit',
         element: <TransactionsForm edit={true} />,
-        loader: api.all(api.getBudgets),
+        loader: api.all(api.getBudgets, api.getTransaction),
         action: api.postTransactionToBudget
       }
       ,
