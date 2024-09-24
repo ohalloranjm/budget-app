@@ -14,8 +14,8 @@ export default function TransactionsPage() {
 
     if (!Transactions) return null
     return <div>
-        <h1>My Transactions</h1>
-        <Link to='new'>Input a New Transaction</Link>
+        <h1 className='secondary-dark'>My Transactions</h1>
+        <Link className='dark' to='new'>Input a New Transaction</Link>
         {Transactions.map(t => <TransactionSummary key={t.id} transaction={t} />)}
     </div>
 }
