@@ -89,7 +89,7 @@ def post_transaction_to_budget_by_name(budget_name):
         form.populate_obj(transaction)
         budget.transactions.append(transaction)
         db.session.commit()
-        return transaction.to_dict_simple()
+        return transaction.to_dict_simple(), 201
     if form.errors:
         print(form.errors)
         return form.errors, 400
