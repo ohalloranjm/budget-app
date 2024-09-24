@@ -10,6 +10,7 @@ from alembic import op
 import sqlalchemy as sa
 
 import os
+
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
@@ -37,7 +38,7 @@ def upgrade():
     op.create_table(
         "budget_templates",
         sa.Column("template_id", sa.Integer(), nullable=True),
-        sa.Column("budget_id", sa.String(length=50), nullable=True),
+        sa.Column("budget_id", sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(
             ["budget_id"],
             ["budgets.id"],
