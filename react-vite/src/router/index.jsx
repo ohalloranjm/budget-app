@@ -24,10 +24,17 @@ export const router = createBrowserRouter([
       },
       {
         path: '/transactions/new',
-        element: <TransactionsForm />,
+        element: <TransactionsForm edit={false} />,
         loader: api.getBudgets,
         action: api.postTransactionToBudget
       },
+      {
+        path: '/transactions/:transactionId/edit',
+        element: <TransactionsForm edit={true} />,
+        loader: api.getBudgets,
+        action: api.postTransactionToBudget
+      }
+      ,
       {
         path: "login",
         element: <LoginFormPage />,

@@ -3,7 +3,8 @@ import { useLoaderData, useSubmit, useActionData } from "react-router-dom"
 import toCents from "../../utils/to-cents"
 import { formatDateInternal } from "../../utils/format-date"
 
-export default function TransactionsForm() {
+export default function TransactionsForm({edit}) {
+
     const submit = useSubmit()
 
     const [name, setName] = useState('')
