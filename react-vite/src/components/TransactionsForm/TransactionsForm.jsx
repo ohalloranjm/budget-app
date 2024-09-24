@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLoaderData, useSubmit, useActionData } from "react-router-dom"
 import toCents from "../../utils/to-cents"
 import { formatDateInternal } from "../../utils/format-date"
@@ -14,17 +14,18 @@ export default function TransactionsForm({edit}) {
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
     const data = useLoaderData()
-    let Budgets
-
-    if (edit) {
-        Budgets = data[0].Budgets
-        console.log(data[1])
-    } else {
-        Budgets = data.Budgets
-    }
-
-    console.log(Budgets)
-    console.log()
+    useEffect(() => {
+        if (edit) {
+            const og = data[1]
+            setName(og.name)
+            setAmount(og.amount)
+            setDescription(og.description ?? '')
+            setDate(formatDateInternal(new Date(og.date)))
+            setBudgetName(og.Budget.name)
+        }
+    }, [edit, data])
+    
+    const Budgets = edit ? data[0].Budgets : data.Budgets
 
     const budgetCategories = new Set(Budgets.map(b => b.name))
 
