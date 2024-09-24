@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import db, Budget
+from app.models import db, Budget,Template,Transaction
 from flask_login import current_user, login_required
 from app.forms import BudgetForm
 
@@ -64,6 +64,39 @@ def create_budget():
     
     return
 
+# Create a new budget from an existing template for the current user. No test yet!!!!!
+@budget_routes.route('/from-template/<int:template_id>', methods=['POST'])
+@login_required
+def create_budget_from_template(template_id):
+
+    template = Template.query.get(template_id)
+
+    if not template:
+        return {'error': 'Template not found'}, 404
+
+    form = BudgetForm()
+
+    if form.validate_on_submit():
+        # Create a new budget based on the template
+        budget = Budget(
+            name=form.name.data if form.name.data else template.name,
+            allocated=form.allocated.data if form.allocated.data else template.allocated,
+            start_date=form.start_date.data if form.start_date.data else template.start_date,
+            end_date=form.end_date.data if form.end_date.data else template.end_date,
+            user_id=current_user.id,
+            icon=form.icon.data if form.icon.data else template.icon
+        )
+
+        db.session.add(budget)
+        db.session.commit()
+
+        return budget.to_dict_simple(), 201
+    
+    if form.errors:
+        return {"errors": format_errors(form.errors)}, 400
+    
+    return
+
 # Edit an existing budget for the current user.
 @budget_routes.route('/<int:id>', methods=['PUT'])
 @login_required
@@ -97,6 +130,8 @@ def delete_budget(id):
 
     if not budget or budget.user_id != current_user.id:
         return {'error': 'Budget not found or access denied.'}, 404
+    
+    Transaction.query.filter_by(budget_id=id).delete()
 
     db.session.delete(budget)
     db.session.commit()
