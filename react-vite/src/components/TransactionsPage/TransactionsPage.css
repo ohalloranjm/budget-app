@@ -1,3 +1,9 @@
+.new-transaction-button {
+    padding: 10px;
+    display: block;
+    margin: 10px auto;    
+}
+
 .transaction-summary-tile {
     border: 1px white solid;
     padding: 10px;
