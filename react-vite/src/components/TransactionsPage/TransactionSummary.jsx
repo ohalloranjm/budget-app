@@ -1,5 +1,6 @@
 import { useNavigate, useSubmit } from "react-router-dom"
 import formatDate from "../../utils/format-date"
+import dollarString from "../../utils/dollar-string"
 
 export default function TransactionSummary({ transaction }) {
 
@@ -12,7 +13,7 @@ export default function TransactionSummary({ transaction }) {
     }
     
     return <div className='transaction-summary-tile'>
-        <h3 className='secondary-dark'>${transaction.amount}</h3>
+        <h3 className='secondary-dark'>{dollarString(transaction.amount)}</h3>
         <p>{transaction.Budget?.name}</p>
         <p>{transaction.name}</p>
         <p>{formatDate(transaction.date)}</p>
