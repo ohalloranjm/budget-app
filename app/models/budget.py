@@ -22,7 +22,6 @@ class Budget(db.Model):
     templates = db.relationship(
         "Template", secondary=budget_templates, back_populates="budgets"
     )
-    vendors = db.relationship("Vendor", back_populates="budgets", cascade='all, delete-orphan')
 
     def to_dict_simple(self):
         return {

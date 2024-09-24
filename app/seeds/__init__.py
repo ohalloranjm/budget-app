@@ -5,7 +5,6 @@ from .save_goals import seed_save_goals, undo_save_goals
 from .transactions import seed_transactions, undo_transactions
 from .templates import seed_templates, undo_templates
 from .total_expenses import seed_total_expenses, undo_total_expenses
-from .vendors import seed_vendors, undo_vendors
 
 from app.models.db import environment
 
@@ -29,14 +28,12 @@ def seed():
     seed_templates()
     seed_save_goals()
     seed_total_expenses()
-    seed_vendors()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command("undo")
 def undo():
-    undo_vendors()
     undo_total_expenses()
     undo_save_goals()
     undo_templates()
