@@ -38,51 +38,34 @@ def edit_transaction(id):
     # if not transaction.user_id == current_user.id:
     #     return {'errors': {'message': 'Unauthorized'}}, 401
     
-    form = TransactionForm()
     edits = request.json
-    reassign_budget = False
+    form = TransactionForm()
 
-    if 'budget_name' in edits:
-        reassign_budget = True
-    else:
-        form['budget_id'].data = transaction.budget_id
+    old_budget_name = transaction.budgets.name
+    new_budget_name = request.json['budget_name']
+    change_budget_name = old_budget_name != new_budget_name
 
-    if 'date' in edits:
-        form['date'].data = edits['date']
-        reassign_budget = True
-    else:
-        form['date'].data = transaction.date
+    old_date = str(transaction.date)[:10]
+    new_date = str(form['date'].data)[:10]
+    change_date = old_date != new_date
+    
+    if change_budget_name or change_date:
+        budgets_in_category = Budget.query.filter(Budget.name == new_budget_name and Budget.user_id == 1) # todo change 1 to current_user.id
+        
+        if not len(list(budgets_in_category)):
+            return {'errors': {'message': f'User does not have any budgets with the name {new_budget_name}'}}, 404
+        
+        def valid_date(budget):
+            if budget.start_date > form['date'].data:
+                return False
+            if budget.end_date and budget.end_date < form['date'].data:
+                return False
+            return True
+        valid_budgets = [ budget for budget in budgets_in_category if valid_date(budget)]
 
-    if reassign_budget:
-        budget_name = None
-        if 'budget_name' in edits:
-            budget_name = edits['budget_name']
-        else:
-            original_budget = Budget.query.get(transaction.budget_id)
-            budget_name = original_budget.name
-        budgets_in_category = Budget.query.filter(Budget.name == budget_name)
-        print(list(budgets_in_category))
-    
-    if 'amount' in edits:
-        form['amount'].data = edits['amount']
-    else:
-        form['amount'].data = transaction.amount
-    
-    if 'name' in edits:
-        form['name'].data = edits['name']
-    else:
-        form['name'].data = transaction.name
-    
-    if 'description' in edits:
-        form['description'].data = edits['description']
-    else:
-        form['description'].data = transaction.description
-    
+    return {'hi': True}
 
     form.populate_obj(transaction)
-
-    print(request.json)
-    print(form.data)
 
     return {'message': 'hi'}
     
