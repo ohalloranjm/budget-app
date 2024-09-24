@@ -12,6 +12,16 @@ def get_user_transactions():
     transactions = Transaction.query.filter(Transaction.user_id == user['id']).all()
     return {'Transactions': [transaction.to_dict() for transaction in transactions]}
 
+@transaction_routes.route('/<int:id>')
+@login_required
+def get_transaction():
+    transaction = Transaction.get(id)
+    if not transaction:
+        return {'errors': {'message': 'Transaction not found'}}, 404
+    if transaction.user_id != current_user.id:
+        return {'errors': {'message': 'Unauthorized'}}, 401
+    return transaction.to_dict()
+
 @transaction_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_transaction(id):
