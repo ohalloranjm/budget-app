@@ -1,20 +1,26 @@
-import { useState } from "react";
-import { thunkLogin } from "../../redux/session";
-import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useSubmit, Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import BudgetSummary from "./BudgetSummary";
 
 export default function BudgetsPage() {
-    const budgets = useLoaderData()?.Budgets
+    const user = useSelector(store => store.session.user);
+    const { Budgets } = useLoaderData();
+    const submit = useSubmit();
 
-    if (budgets) return <div className="primary-dark">
-        {budgets.map(budget=> {
-            return <div>
-                <h2>{budget.name}</h2>
-                <p>${budget.allocated}</p>
-            </div>
-        })}
-    </div>
+    useEffect(() => {
+        submit();  
+    }, [user, submit]);
 
-    return null
+    if (!Budgets) return <p>No budgets available.</p>;
+
+    return (
+        <div>
+            <h1>My Budgets</h1>
+            <Link to="/budgets/new">Create New Budget</Link>
+            {Budgets.map(budget => (
+                <BudgetSummary key={budget.id} budget={budget} />
+            ))}
+        </div>
+    );
 }
