@@ -13,7 +13,16 @@ export default function TransactionsForm({edit}) {
     const [date, setDate] = useState(formatDateInternal(new Date()))
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
-    const { Budgets } = useLoaderData()
+    const data = useLoaderData()
+    let Budgets
+
+    if (edit) {
+        Budgets = data[0].Budgets
+    } else {
+        Budgets = data.Budgets
+    }
+
+    console.log(Budgets)
 
     const budgetCategories = new Set(Budgets.map(b => b.name))
 
