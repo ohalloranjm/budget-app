@@ -29,10 +29,16 @@ export default function TransactionsForm({edit}) {
 
     const budgetCategories = new Set(Budgets.map(b => b.name))
 
-    const submitForm = e => {
+    const post = e => {
         e.preventDefault()
         const transaction = { name, amount: toCents(amount), date, description }
         submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
+    }
+
+    const put = e => {
+        e.preventDefault()
+        const transaction = { name, amount: toCents(amount), date, description, budgetName }
+        submit(transaction, {method: 'post', encType: 'application/json'})
     }
 
     return <form>
@@ -69,7 +75,7 @@ export default function TransactionsForm({edit}) {
         </select>
         <button 
             type='submit'
-            onClick={submitForm}
+            onClick={edit ? put : post}
             disabled={!budgetName}
         >Submit</button>
     </form>
