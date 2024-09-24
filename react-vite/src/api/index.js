@@ -16,6 +16,7 @@ const all = (...routes) =>
 const api = {
   all,
   getBudgets,
+  getTransaction,
   getTransactions,
   postTransactionToBudget,
   deleteTransaction,
