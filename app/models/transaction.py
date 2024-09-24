@@ -1,8 +1,11 @@
-from .db import add_prefix_for_prod, db
+from .db import add_prefix_for_prod, db, environment, SCHEMA
 from app.utils import to_dollars
 
 class Transaction(db.Model):
     __tablename__ = "transactions"
+
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
@@ -19,7 +22,6 @@ class Transaction(db.Model):
     user = db.relationship("User", back_populates="transactions")
 
     budgets = db.relationship("Budget", back_populates="transactions")
-    vendors = db.relationship("Vendor", back_populates="transactions", cascade='all, delete-orphan')
 
     def to_dict_simple(self):
         return {

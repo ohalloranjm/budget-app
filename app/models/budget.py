@@ -5,6 +5,10 @@ from app.utils import to_dollars
 
 class Budget(db.Model):
     __tablename__ = "budgets"
+
+    if environment == "production":
+        __table_args__ = {"schema": SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     allocated = db.Column(db.Integer, nullable=False)
@@ -18,7 +22,6 @@ class Budget(db.Model):
     templates = db.relationship(
         "Template", secondary=budget_templates, back_populates="budgets"
     )
-    vendors = db.relationship("Vendor", back_populates="budgets", cascade='all, delete-orphan')
 
     def to_dict_simple(self):
         return {

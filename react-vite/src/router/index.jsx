@@ -2,16 +2,19 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginFormPage from "../components/LoginFormPage";
 import SignupFormPage from "../components/SignupFormPage";
 import BudgetsPage from "../components/BudgetsPage";
+import BudgetForm from "../components/BudgetsForm/BudgetsForm";
+import BudgetDetails from "../components/BudgetsPage/BudgetDetails";
 import TransactionsPage from "../components/TransactionsPage";
-import TemplatesPage from "../components/TemplatesPage";
 import Layout from "./Layout";
+import TransactionsForm from "../components/TransactionsForm";
+import api from "../api";
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: "/budgets", // Review all budgets by current user
         element: <BudgetsPage></BudgetsPage>,
         loader: async () => {
           let res = await fetch("/api/budgets");
@@ -22,44 +25,44 @@ export const router = createBrowserRouter([
         },
       },
       {
-        path: "/transactions",
-        element: <TransactionsPage />,
-        loader: async () => {
-          const res = await fetch("/api/transactions");
-          const data = await res.json();
-          if (res.ok) return data;
-          return false;
-        },
-        action: async ({ request: req }) => {
-          console.log(req);
-          if (req.method?.toLowerCase() === "delete") {
-            const { id } = await req.json();
-            const res = await fetch(`/api/transactions/${id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            return res;
+        path: "/budgets/new", // Create a new budget
+        element: <BudgetForm />,
+      },
+
+      {
+        path: "/budgets/:id", // View budget by budget_ID
+        element: <BudgetDetails />,
+        loader: async ({ params }) => {
+          const res = await fetch(`/api/budgets/${params.id}`);
+          if (res.ok) {
+            const data = await res.json();
+            return data;
+          } else {
+            return false;
           }
         },
       },
+
       {
-        path: "/templates",
-        element: <TemplatesPage />,
-        loader: async () => {
-          const res = await fetch("/api/templates");
-          const { Templates: data } = await res.json();
-          if (res.ok) return data;
-          return null;
+        path: "/budgets/:id/edit", // Edit an existing budget
+        element: <BudgetForm />,
+        loader: async ({ params }) => {
+          const res = await fetch(`/api/budgets/${params.id}`);
+          return res.ok ? await res.json() : null;
         },
       },
+
       {
-        path: "/templates/:templateId",
-        element: <TemplatesPage />,
-        loader: async () => {
-          return 1;
-        },
+        path: "/transactions",
+        element: <TransactionsPage />,
+        loader: api.getTransactions,
+        action: api.deleteTransaction,
+      },
+      {
+        path: "/transactions/new",
+        element: <TransactionsForm />,
+        loader: api.getBudgets,
+        action: api.postTransactionToBudget,
       },
       {
         path: "login",

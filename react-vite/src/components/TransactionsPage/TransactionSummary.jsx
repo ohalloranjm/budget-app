@@ -1,4 +1,5 @@
 import { useSubmit } from "react-router-dom"
+import formatDate from "../../utils/format-date"
 
 export default function TransactionSummary({ transaction }) {
 
@@ -7,14 +8,6 @@ export default function TransactionSummary({ transaction }) {
     function deleteTransaction(e) {
             e.preventDefault()
             submit({id: transaction.id}, {method: 'delete', encType: 'application/json'})
-    }
-
-    function formatDate(dateStr) {
-        const date = new Date(dateStr)
-        const month = date.getMonth() + 1
-        const day = date.getDate()
-        const year = date.getFullYear()
-        return `${month}/${day < 10 ? '0' : ''}${day}/${year}`
     }
     
     return <div className='transaction-summary-tile'>

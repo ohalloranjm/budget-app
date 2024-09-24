@@ -9,6 +9,11 @@ Create Date: 2024-09-19 12:34:01.629981
 from alembic import op
 import sqlalchemy as sa
 
+import os
+
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 
 # revision identifiers, used by Alembic.
 revision = "6c349db83c8a"
@@ -33,7 +38,7 @@ def upgrade():
     op.create_table(
         "budget_templates",
         sa.Column("template_id", sa.Integer(), nullable=True),
-        sa.Column("budget_id", sa.String(length=50), nullable=True),
+        sa.Column("budget_id", sa.Integer(), nullable=True),
         sa.ForeignKeyConstraint(
             ["budget_id"],
             ["budgets.id"],
@@ -62,6 +67,11 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE templates SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE budget_templates SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE transactions SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
