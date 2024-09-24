@@ -1,12 +1,22 @@
+.new-transaction-button {
+    padding: 10px;
+    margin: 10px auto;    
+}
+
 .transaction-summary-tile {
     border: 1px white solid;
     padding: 10px;
     display: grid;
-    grid-template-columns: 3fr 3fr 3fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 5fr 1fr 1fr;
     column-gap: 5px;
 }
 
-.transaction-summary-tile > p, .transaction-summary-name {
+.transaction-summary-tile > p, .transaction-summary-tile > h3 {
     padding: 10px 0;
     margin: 0;
+}
+
+.transaction-summary-tile > button {
+    margin: auto 0;
+    padding: 10px
 }

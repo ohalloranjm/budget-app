@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useSubmit } from "react-router-dom"
+import { useLoaderData, useNavigate, useSubmit } from "react-router-dom"
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import TransactionSummary from "./TransactionSummary"
@@ -8,14 +8,16 @@ export default function TransactionsPage() {
     const user = useSelector(store => store.session.user)
     const { Transactions } = useLoaderData()
     const submit = useSubmit()
+    const navigate = useNavigate()
     useEffect(() => {
         submit()
     }, [user, submit])
 
+    const makeNew = () => navigate('new')
+
     if (!Transactions) return null
     return <div>
-        <h1 className='secondary-dark'>My Transactions</h1>
-        <Link className='dark' to='new'>Input a New Transaction</Link>
+        <button className='dark new-transaction-button' onClick={makeNew}>New Transaction</button>
         {Transactions.map(t => <TransactionSummary key={t.id} transaction={t} />)}
     </div>
 }
