@@ -1,9 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
-import BudgetsPage from '../components/BudgetsPage'
-import TransactionsPage from '../components/TransactionsPage';
-import Layout from './Layout';
+import { createBrowserRouter } from "react-router-dom";
+import LoginFormPage from "../components/LoginFormPage";
+import SignupFormPage from "../components/SignupFormPage";
+import BudgetsPage from "../components/BudgetsPage";
+import TransactionsPage from "../components/TransactionsPage";
+import TemplatesPage from "../components/TemplatesPage";
+import Layout from "./Layout";
 
 export const router = createBrowserRouter([
   {
@@ -12,38 +13,53 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <BudgetsPage></BudgetsPage>,
-        loader: async ()=> {
-          let res = await fetch('/api/budgets')
+        loader: async () => {
+          let res = await fetch("/api/budgets");
           if (res.ok) {
-            return await res.json()
+            return await res.json();
           }
-          return false
-        }
+          return false;
+        },
       },
       {
-        path: '/transactions',
+        path: "/transactions",
         element: <TransactionsPage />,
         loader: async () => {
-          const res = await fetch('/api/transactions')
-          const data = await res.json()
-          if (res.ok) return data
-          return false
+          const res = await fetch("/api/transactions");
+          const data = await res.json();
+          if (res.ok) return data;
+          return false;
         },
-        action: async ({request: req}) => {
-          console.log(req)
-          if (req.method?.toLowerCase() === 'delete') {
-            const { id } = await req.json()
+        action: async ({ request: req }) => {
+          console.log(req);
+          if (req.method?.toLowerCase() === "delete") {
+            const { id } = await req.json();
             const res = await fetch(`/api/transactions/${id}`, {
-              method: 'DELETE',
+              method: "DELETE",
               headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-            return res
+                "Content-Type": "application/json",
+              },
+            });
+            return res;
           }
-
-
-        }
+        },
+      },
+      {
+        path: "/templates",
+        element: <TemplatesPage />,
+        loader: async () => {
+          const res = await fetch("/api/templates");
+          const { Templates: data } = await res.json();
+          if (res.ok) return data;
+          return null;
+        },
+      },
+      {
+        path: "/templates/:templateId",
+        element: <TemplatesPage />,
+        loader: async () => {
+          return 1;
+        },
       },
       {
         path: "login",

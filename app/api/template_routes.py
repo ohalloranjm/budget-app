@@ -12,7 +12,6 @@ def get_user_templates():
     Get all templates made by a specific user
     """
     user = current_user.to_dict()
-    print(f"\n\n\n\n\n{user}\n\n\n\n\n")
     templates = Template.query.filter(Template.user_id == user["id"]).all()
     return {"Templates": [template.to_dict_simple() for template in templates]}
 
@@ -29,6 +28,9 @@ def get_template_by_id(template_id):
 @template_routes.route("/<int:template_id>", methods=["DELETE"])
 @login_required
 def delete_template(template_id):
+    """
+    Delete a template by ID
+    """
     template = Template.query.get(template_id)
     if not template:
         return {"errors": {"message": "Template not found"}}, 404
