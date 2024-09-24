@@ -12,11 +12,11 @@ export default function TransactionSummary({ transaction }) {
     }
     
     return <div className='transaction-summary-tile'>
-        <h3>{transaction.name}</h3>
+        <h3 className='transaction-summary-name secondary-dark'>{transaction.name}</h3>
         <p>{formatDate(transaction.date)}</p>
         <p>${transaction.amount}</p>
         <p>{transaction.Budget?.name}</p>
-        <button onClick={() =>navigate(`${transaction.id}/edit`)}>Edit</button>
-        <button onClick={deleteTransaction}>Delete</button>
+        <button className='dark' onClick={() =>navigate(`${transaction.id}/edit`)}>Edit</button>
+        <button className='dark' onClick={deleteTransaction}>Delete</button>
     </div>
 }

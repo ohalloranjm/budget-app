@@ -53,3 +53,15 @@ a {
     color: azure;
     text-shadow: 2px 2px 2px rgb(31, 32, 30);
 }
+
+button.dark {
+    background-color: rgb(94, 255, 0);
+    color: rgb(31, 32, 30);
+    text-shadow: 2px 2px 2px azure;
+}
+
+button.dark:hover {
+    background-color: azure;
+    box-shadow: 1px 1px 5px rgb(94, 255, 0);
+    cursor: pointer;
+}
