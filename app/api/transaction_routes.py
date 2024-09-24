@@ -30,16 +30,16 @@ def delete_transaction(id):
     }
 
 @transaction_routes.route('/<int:id>', methods=['PUT'])
-# @login_required
+@login_required
 def edit_transaction(id):
     transaction = Transaction.query.get(id)
     if not transaction:
         return {'errors': {'message': 'Transaction not found'}}, 404
-    # if not transaction.user_id == current_user.id:
-    #     return {'errors': {'message': 'Unauthorized'}}, 401
+    if not transaction.user_id == current_user.id:
+        return {'errors': {'message': 'Unauthorized'}}, 401
     
-    edits = request.json
-    form = TransactionForm()
+    form = TransactionForm(user_id=current_user.id)
+    form['csrf_token'].data = request.cookies['csrf_token']
 
     old_budget_name = transaction.budgets.name
     new_budget_name = request.json['budget_name']
@@ -50,7 +50,7 @@ def edit_transaction(id):
     change_date = old_date != new_date
     
     if change_budget_name or change_date:
-        budgets_in_category = Budget.query.filter(Budget.name == new_budget_name and Budget.user_id == 1) # todo change 1 to current_user.id
+        budgets_in_category = Budget.query.filter(Budget.name == new_budget_name and Budget.user_id == current_user.id)
         
         if not len(list(budgets_in_category)):
             return {'errors': {'message': f'User does not have any budgets with the name {new_budget_name}'}}, 404
@@ -63,9 +63,25 @@ def edit_transaction(id):
             return True
         valid_budgets = [ budget for budget in budgets_in_category if valid_date(budget)]
 
-    return {'hi': True}
+        if not len(valid_budgets):
+            form['budget_id'].data = transaction.budget_id
+            form.validate_on_submit()
+            if form.errors:
+                errors = dict(form.errors)
+                errors['date'] = f'{new_budget_name} date range does not include {new_date}'
+                return errors, 400
+            return {'date': f'{new_budget_name} date range does not include {new_date}'}, 400
+                
+        budget = valid_budgets[0]
+        form['budget_id'].data = budget.id
 
-    form.populate_obj(transaction)
+    else:
+        form['budget_id'].data = transaction.budget_id
 
-    return {'message': 'hi'}
+    if form.validate_on_submit():
+        form.populate_obj(transaction)
+        db.session.commit()
+        return transaction.to_dict_simple()
+    if form.errors:
+        return form.errors, 400
     
