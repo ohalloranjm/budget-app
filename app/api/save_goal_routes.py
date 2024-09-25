@@ -67,6 +67,8 @@ def edit_save_goal_by_id(save_goal_id):
         db.session.commit()
 
         return save_goal.to_dict_simple(), 201
+    if form.errors:
+        return {"errors": form.errors}, 400
 
 
 @save_goal_routes.route("/", methods=["POST"])
@@ -92,5 +94,3 @@ def post_new_save_goal():
 
     if form.errors:
         return {"errors": form.errors}, 400
-
-    return
