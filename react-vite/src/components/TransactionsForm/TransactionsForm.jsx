@@ -1,25 +1,44 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useLoaderData, useSubmit, useActionData } from "react-router-dom"
 import toCents from "../../utils/to-cents"
-import { formatDateInternal } from "../../utils/format-date"
+import { formatDateInternal, todayInternal } from "../../utils/format-date"
 
-export default function TransactionsForm() {
+export default function TransactionsForm({edit}) {
+
     const submit = useSubmit()
 
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState(formatDateInternal(new Date()))
+    const [date, setDate] = useState(todayInternal())
     const [budgetName, setBudgetName] = useState('')
     const errors = useActionData() ?? {}
-    const { Budgets } = useLoaderData()
+    const data = useLoaderData()
+    useEffect(() => {
+        if (edit) {
+            const og = data[1]
+            setName(og.name)
+            setAmount(og.amount)
+            setDescription(og.description ?? '')
+            setDate(formatDateInternal(new Date(og.date)))
+            setBudgetName(og.Budget.name)
+        }
+    }, [])
+    
+    const Budgets = edit ? data[0].Budgets : data.Budgets
 
     const budgetCategories = new Set(Budgets.map(b => b.name))
 
-    const submitForm = e => {
+    const post = e => {
         e.preventDefault()
         const transaction = { name, amount: toCents(amount), date, description }
         submit({budgetName, transaction}, {method: 'post', encType: 'application/json'})
+    }
+
+    const put = e => {
+        e.preventDefault()
+        const transaction = { name, amount: toCents(amount), date, description, budgetName }
+        submit(transaction, {method: 'post', encType: 'application/json'})
     }
 
     return <form>
@@ -56,7 +75,7 @@ export default function TransactionsForm() {
         </select>
         <button 
             type='submit'
-            onClick={submitForm}
+            onClick={edit ? put : post}
             disabled={!budgetName}
         >Submit</button>
     </form>

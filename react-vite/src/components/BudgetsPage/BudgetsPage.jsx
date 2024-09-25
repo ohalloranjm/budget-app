@@ -1,26 +1,69 @@
-import { useLoaderData, useSubmit, Link } from "react-router-dom";
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import BudgetSummary from "./BudgetSummary";
+import { useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
+import format from "date-fns/format";
 
 export default function BudgetsPage() {
-    const user = useSelector(store => store.session.user);
-    const { Budgets } = useLoaderData();
-    const submit = useSubmit();
+  const { Budgets } = useLoaderData();
 
-    useEffect(() => {
-        submit();  
-    }, [user, submit]);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [isFiltered, setIsFiltered] = useState(false);
 
-    if (!Budgets) return <p>No budgets available.</p>;
+  const handleMonthChange = (e) => {
+    setSelectedMonth(e.target.value);
+    setIsFiltered(true);
+  };
 
-    return (
-        <div>
-            <h1>My Budgets</h1>
-            <Link to="/budgets/new">Create New Budget</Link>
-            {Budgets.map(budget => (
-                <BudgetSummary key={budget.id} budget={budget} />
-            ))}
-        </div>
-    );
+  const displayAllBudgets = () => {
+    setSelectedMonth("");
+    setIsFiltered(false);
+  };
+
+  // Filter budgets by selected month
+  const filteredBudgets = Budgets.filter((budget) => {
+    if (!selectedMonth) return true; // If no month is selected, show all budgets
+    const startDate = new Date(budget.start_date);
+    const budgetMonth = format(startDate, "yyyy-MM");
+    return budgetMonth === selectedMonth;
+  });
+
+  if (!Budgets) return <p>No budgets found.</p>;
+
+  return (
+    <div>
+      <h1>My Budgets</h1>
+      
+      {/* Month Filter */}
+      <label htmlFor="month-select">Filter by Month:</label>
+      <input
+        type="month"
+        id="month-select"
+        value={selectedMonth}
+        onChange={handleMonthChange}
+      />
+
+      {/* Display All Budgets Button */}
+      {isFiltered && (
+        <button onClick={displayAllBudgets}>
+          Display All Budgets
+        </button>
+      )}
+
+      <Link to="/budgets/new">Create New Budget</Link>
+
+      <ul>
+        {filteredBudgets.length > 0 ? (
+          filteredBudgets.map((budget) => (
+            <li key={budget.id}>
+              <Link to={`/budgets/${budget.id}`}>{budget.name}</Link>
+              <p>
+                Start Date: {format(new Date(budget.start_date), "yyyy-MM-dd")}
+              </p>
+            </li>
+          ))
+        ) : (
+          <p>No budgets found for this month.</p>
+        )}
+      </ul>
+    </div>
+  );
 }

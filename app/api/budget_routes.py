@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from app.models import db, Budget, Template, Transaction
 from flask_login import current_user, login_required
 from app.forms import BudgetForm, TransactionForm
+from app.utils import to_dollars
 
 budget_routes = Blueprint("budgets", __name__)
 
@@ -16,6 +17,36 @@ def format_errors(validation_errors):
         errorMessages[field] = [error for error in validation_errors[field]]
 
     return errorMessages
+
+
+def calculate_rollover(budget):
+    current_period_spend = sum(
+        transaction.amount for transaction in budget.transactions
+    )
+    rollover = budget.allocated - current_period_spend
+    return rollover
+
+
+# Query for all active budgets for the current user and return a summary with overspending/surplus rolled over to the next budget period.
+@budget_routes.route("/active")
+@login_required
+def active_budgets():
+    active_budgets = Budget.query.filter_by(user_id=current_user.id).all()
+
+    summary = []
+    for budget in active_budgets:
+        rollover = calculate_rollover(budget)
+        summary.append(
+            {
+                "id": budget.id,
+                "name": budget.name,
+                "allocated": to_dollars(budget.allocated),
+                "start_date": budget.start_date,
+                "end_date": budget.end_date,
+                "rollover": to_dollars(rollover),
+            }
+        )
+    return {"active_budgets": summary}
 
 
 # Query for all budgets
@@ -98,7 +129,7 @@ def post_transaction_to_budget_by_name(budget_name):
         form.populate_obj(transaction)
         budget.transactions.append(transaction)
         db.session.commit()
-        return transaction.to_dict_simple()
+        return transaction.to_dict_simple(), 201
     if form.errors:
         print(form.errors)
         return form.errors, 400
@@ -133,43 +164,6 @@ def create_budget():
 
         # print(new_budget.to_dict_simple())
         return new_budget.to_dict_simple(), 201
-
-    if form.errors:
-        return {"errors": format_errors(form.errors)}, 400
-
-    return
-
-
-# Create a new budget from an existing template for the current user. No test yet!!!!!
-@budget_routes.route("/from-template/<int:template_id>", methods=["POST"])
-@login_required
-def create_budget_from_template(template_id):
-    template = Template.query.get(template_id)
-
-    if not template:
-        return {"error": "Template not found"}, 404
-
-    form = BudgetForm()
-
-    if form.validate_on_submit():
-        # Create a new budget based on the template
-        budget = Budget(
-            name=form.name.data if form.name.data else template.name,
-            allocated=form.allocated.data
-            if form.allocated.data
-            else template.allocated,
-            start_date=form.start_date.data
-            if form.start_date.data
-            else template.start_date,
-            end_date=form.end_date.data if form.end_date.data else template.end_date,
-            user_id=current_user.id,
-            icon=form.icon.data if form.icon.data else template.icon,
-        )
-
-        db.session.add(budget)
-        db.session.commit()
-
-        return budget.to_dict_simple(), 201
 
     if form.errors:
         return {"errors": format_errors(form.errors)}, 400
