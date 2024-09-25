@@ -9,6 +9,7 @@ import GenericError from '../components/GenericError';
 import Layout from './Layout';
 import TransactionsForm from '../components/TransactionsForm';
 import api from '../api';
+import SaveGoals from '../components/SaveGoalsPage/SaveGoals';
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +53,10 @@ export const router = createBrowserRouter([
           return res.ok ? await res.json() : null;
         },
       },
-
+      {
+        path: "/save-goals",
+        element: <SaveGoals/>,
+      },
       {
         path: "/transactions",
         element: <TransactionsPage />,

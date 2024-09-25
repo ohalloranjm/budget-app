@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from ..forms import SaveGoalForm
 from datetime import datetime
 
-save_goal_routes = Blueprint("templates", __name__)
+save_goal_routes = Blueprint("save-goals", __name__)
 
 
 @save_goal_routes.route("/")
@@ -28,6 +28,8 @@ def get_save_goal_by_id(save_goal_id):
     if not save_goal:
         return {"errors": {"message": "Save goal not found"}}, 404
 
+    return save_goal.to_dict_simple()
+
 
 @save_goal_routes.route("/<int:save_goal_id>", methods=["DELETE"])
 @login_required
@@ -41,7 +43,7 @@ def delete_save_goal(save_goal_id):
     if not save_goal.user_id == current_user.id:
         return {"errors": {"message": "Unauthorized"}}, 401
 
-    temp = save_goal.to_dict()
+    temp = save_goal.to_dict_simple()
     db.session.delete(save_goal)
     db.session.commit()
     return {"message": "Save goal successfully deleted", "Save goal": temp}
@@ -86,6 +88,7 @@ def post_new_save_goal():
         form.populate_obj(new_save_goal)
         new_save_goal.user_id = current_user.to_dict()["id"]
         new_save_goal.start_date = datetime.now()
+        new_save_goal.end_date = datetime.fromisoformat(form.end_date.data)
 
         db.session.add(new_save_goal)
         db.session.commit()
