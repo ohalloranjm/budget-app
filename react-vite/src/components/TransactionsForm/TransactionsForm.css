@@ -12,7 +12,7 @@
         "description description"
         "description-error description-error"
         "submit submit";
-    gap: 5px
+    gap: 10px
 }
 
 .transaction-form > * {
