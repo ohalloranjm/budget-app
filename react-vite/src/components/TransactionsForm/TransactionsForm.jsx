@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useLoaderData, useSubmit, useActionData } from "react-router-dom"
+import { useLoaderData, useSubmit, useActionData, useNavigate } from "react-router-dom"
 import toCents from "../../utils/to-cents"
 import { formatDateInternal, todayInternal } from "../../utils/format-date"
 import "./TransactionsForm.css"
@@ -7,6 +7,7 @@ import "./TransactionsForm.css"
 export default function TransactionsForm({edit}) {
 
     const submit = useSubmit()
+    const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [amount, setAmount] = useState('')
@@ -92,7 +93,12 @@ export default function TransactionsForm({edit}) {
             onClick={edit ? put : post}
             disabled={!budgetName}
             className='dark tf-submit-button'
-        >{edit ? 'Submit Edits' : 'Create'}</button>
+        >{edit ? 'Submit Edits' : 'Add Transaction'}</button>
+        <button 
+            type='button'
+            onClick={() => navigate('/transactions')}
+            className='tf-back-button dark'
+        >Go Back</button>
 
         </div>
     </form>

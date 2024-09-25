@@ -1,5 +1,5 @@
 .transaction-form {
-    max-width: 900px;
+    max-width: 700px;
     padding: 0;
     margin: auto;
     display: grid;
@@ -18,12 +18,14 @@
 .transaction-form > * {
     width: 100%;
     margin: 0;
-    font-size: 1.5em;
-    padding: 2px;
+    font-size: 1.4em;
+    padding: 5px;
+    border: 0;
 }
 
 .tf-name {
-    grid-area: name
+    grid-area: name;
+    width: 98%
 }
 
 .tf-name-error {
@@ -62,8 +64,15 @@
     grid-area: submit;
 }
 
-.tf-submit-button {
-    font-size: 1.5em;
+.tf-submit > button {
     display: block;
-    margin: auto;
+    margin: 0 auto 20px;
+}
+
+.tf-submit-button {
+    font-size: 1.3em;
+}
+
+.tf-back-button {
+    font-size: 1.1em;
 }
