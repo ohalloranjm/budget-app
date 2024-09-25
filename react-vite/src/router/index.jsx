@@ -1,15 +1,15 @@
-import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
-import BudgetsPage from '../components/BudgetsPage'
-import BudgetForm from '../components/BudgetsForm/BudgetsForm';
-import BudgetDetails from '../components/BudgetsPage/BudgetDetails';
-import TransactionsPage from '../components/TransactionsPage';
-import GenericError from '../components/GenericError';
-import Layout from './Layout';
-import TransactionsForm from '../components/TransactionsForm';
-import api from '../api';
-import SaveGoals from '../components/SaveGoalsPage/SaveGoals';
+import { createBrowserRouter } from "react-router-dom";
+import LoginFormPage from "../components/LoginFormPage";
+import SignupFormPage from "../components/SignupFormPage";
+import BudgetsPage from "../components/BudgetsPage";
+import BudgetForm from "../components/BudgetsForm/BudgetsForm";
+import BudgetDetails from "../components/BudgetsPage/BudgetDetails";
+import TransactionsPage from "../components/TransactionsPage";
+import GenericError from "../components/GenericError";
+import Layout from "./Layout";
+import TransactionsForm from "../components/TransactionsForm";
+import api from "../api";
+import SaveGoals from "../components/SaveGoalsPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +55,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/save-goals",
-        element: <SaveGoals/>,
+        element: <SaveGoals />,
+        loader: api.getSaveGoals,
       },
       {
         path: "/transactions",
@@ -64,19 +65,18 @@ export const router = createBrowserRouter([
         action: api.deleteTransaction,
       },
       {
-        path: '/transactions/new',
+        path: "/transactions/new",
         element: <TransactionsForm edit={false} />,
         loader: api.getBudgets,
         action: api.postTransactionToBudget,
       },
       {
-        path: '/transactions/:transactionId/edit',
+        path: "/transactions/:transactionId/edit",
         element: <TransactionsForm edit={true} />,
         errorElement: <GenericError />,
         loader: api.all(api.getBudgets, api.getTransaction),
-        action: api.putTransaction
-      }
-      ,
+        action: api.putTransaction,
+      },
       {
         path: "login",
         element: <LoginFormPage />,

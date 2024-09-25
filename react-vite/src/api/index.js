@@ -4,6 +4,7 @@ import getTransactions from './get-transactions.js';
 import postTransactionToBudget from './post-transaction-to-budget.js';
 import putTransaction from './put-transaction.js';
 import deleteTransaction from './delete-transaction.js';
+import getSaveGoals from './get-save-goals.js';
 
 const all = (...routes) =>
   async function (param) {
@@ -22,6 +23,7 @@ const api = {
   putTransaction,
   postTransactionToBudget,
   deleteTransaction,
+  getSaveGoals
 };
 
 export default api;
