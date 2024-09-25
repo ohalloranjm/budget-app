@@ -30,3 +30,16 @@ class Budget(db.Model):
             "user_id": self.user_id,
             "icon": self.icon,
         }
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "allocated": to_dollars(self.allocated),
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "user_id": self.user_id,
+            "icon": self.icon,
+            "transactions": [transaction.to_dict_simple() for transaction in self.transactions],
+            "templates": [template.to_dict_simple() for template in self.templates], 
+        }

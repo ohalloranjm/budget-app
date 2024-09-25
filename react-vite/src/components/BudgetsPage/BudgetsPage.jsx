@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import format from "date-fns/format";
+import "./BudgetPage.css";
+
+function dollarString(money) {
+    let [dollars, cents] = String(money).split('.');
+    cents = cents ?? '00';
+    if (!(cents.length - 1)) cents += '0';
+    return `$${dollars}.${cents}`;
+  }
 
 export default function BudgetsPage() {
   const { Budgets } = useLoaderData();
@@ -56,7 +64,8 @@ export default function BudgetsPage() {
             <li key={budget.id}>
               <Link to={`/budgets/${budget.id}`}>{budget.name}</Link>
               <p>
-                Start Date: {format(new Date(budget.start_date), "yyyy-MM-dd")}
+                {/* Start Date: {format(new Date(budget.start_date), "yyyy-MM-dd")} */}
+                {dollarString(budget.allocated)}
               </p>
             </li>
           ))

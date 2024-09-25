@@ -3,6 +3,8 @@ from app.models import db, Budget,Template,Transaction
 from flask_login import current_user, login_required
 from app.forms import BudgetForm
 from app.utils import to_dollars
+from datetime import date, timedelta
+from calendar import monthrange
 
 budget_routes = Blueprint("budgets", __name__)
 
@@ -18,9 +20,21 @@ def format_errors(validation_errors):
     return errorMessages
 
 def calculate_rollover(budget):
-    current_period_spend = sum(transaction.amount for transaction in budget.transactions)
-    rollover = budget.allocated - current_period_spend 
-    return rollover
+    today = date.today()
+     # Determine the first and last day of the previous month
+    first_day_current_month = today.replace(day=1)
+    last_day_previous_month = first_day_current_month - timedelta(days=1)
+    first_day_previous_month = last_day_previous_month.replace(day=1)
+
+    # Calculate spending for the previous month
+    previous_month_spend = sum(
+        transaction.amount for transaction in budget.transactions
+        if first_day_previous_month <= transaction.date.date() <= last_day_previous_month
+    )
+    
+    # Calculate rollover based on unspent budget in the previous month
+    rollover = budget.allocated - previous_month_spend
+    return rollover if rollover > 0 else 0 
 
 # Query for all active budgets for the current user and return a summary with overspending/surplus rolled over to the next budget period.
 @budget_routes.route('/active')
@@ -129,8 +143,8 @@ def budget(id):
 
     if not budget:
         return {"error": "Budget not found"}, 404
-    
-    return budget.to_dict_simple()
+
+    return budget.to_dict()
 
 
 # Create a new budget for the current user.
