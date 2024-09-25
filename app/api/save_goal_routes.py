@@ -66,6 +66,7 @@ def edit_save_goal_by_id(save_goal_id):
 
     if form.validate_on_submit():
         form.populate_obj(save_goal)
+        save_goal.end_date = datetime.fromisoformat(form.end_date.data)
         db.session.commit()
 
         return save_goal.to_dict_simple(), 201
