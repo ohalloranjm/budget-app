@@ -69,3 +69,18 @@ button.dark:hover {
     box-shadow: 1px 1px 5px rgb(94, 255, 0);
     cursor: pointer;
 }
+
+button.dark:disabled {
+    background-color: azure;
+    color: rgb(199, 199, 199)
+}
+
+button.dark:disabled:hover {
+    box-shadow: 0px 0px 0px;
+    cursor: inherit
+}
+
+.error {
+    color: rgb(222, 20, 20);
+    font-size: 0.9em;
+}

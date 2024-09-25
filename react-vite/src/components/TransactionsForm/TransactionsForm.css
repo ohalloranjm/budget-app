@@ -1,0 +1,78 @@
+.transaction-form {
+    max-width: 700px;
+    padding: 0;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+        "name amount"
+        "name-error amount-error"
+        "category date"
+        "category-error date-error"
+        "description description"
+        "description-error description-error"
+        "submit submit";
+    gap: 10px
+}
+
+.transaction-form > * {
+    width: 100%;
+    margin: 0;
+    font-size: 1.4em;
+    padding: 5px;
+    border: 0;
+}
+
+.tf-name {
+    grid-area: name;
+    width: 98%
+}
+
+.tf-name-error {
+    grid-area: name-error
+}
+
+.tf-amount {
+    grid-area: amount
+}
+
+.tf-amount-error {
+    grid-area: amount-error
+}
+
+.tf-budget-name {
+    grid-area: category
+}
+
+.tf-date {
+    grid-area: date
+}
+
+.tf-date-error {
+    grid-area: date-error
+}
+
+.tf-description {
+    grid-area: description
+}
+
+.tf-description-error {
+    grid-area: description-error
+}
+
+.tf-submit {
+    grid-area: submit;
+}
+
+.tf-submit > button {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.tf-submit-button {
+    font-size: 1.3em;
+}
+
+.tf-back-button {
+    font-size: 1.1em;
+}
