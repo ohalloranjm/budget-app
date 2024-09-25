@@ -14,7 +14,7 @@ class Budget(db.Model):
     icon = db.Column(db.String(100))
 
     user = db.relationship("User", back_populates="budgets")
-    transactions = db.relationship("Transaction", back_populates="budgets")
+    transactions = db.relationship("Transaction", back_populates="budgets",cascade='all, delete-orphan')
     templates = db.relationship(
         "Template", secondary=budget_templates, back_populates="budgets"
     )
