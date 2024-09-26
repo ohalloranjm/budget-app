@@ -10,6 +10,7 @@ import Layout from "./Layout";
 import TransactionsForm from "../components/TransactionsForm";
 import api from "../api";
 import SaveGoals from "../components/SaveGoalsPage";
+import SaveGoalDetails from "../components/SaveGoalDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,15 @@ export const router = createBrowserRouter([
         path: "/save-goals",
         element: <SaveGoals />,
         loader: api.getSaveGoals,
+      },
+      {
+        path: "/save-goals/:saveGoalId",
+        element: <SaveGoalDetails />,
+        loader: api.getSaveGoal,
+      },
+      {
+        path: "/templates",
+        element: <div></div>,
       },
       {
         path: "/transactions",

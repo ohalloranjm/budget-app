@@ -1,10 +1,11 @@
-import getBudgets from './get-budgets.js';
-import getTransaction from './get-transaction.js';
-import getTransactions from './get-transactions.js';
-import postTransactionToBudget from './post-transaction-to-budget.js';
-import putTransaction from './put-transaction.js';
-import deleteTransaction from './delete-transaction.js';
-import getSaveGoals from './get-save-goals.js';
+import getBudgets from "./get-budgets.js";
+import getTransaction from "./get-transaction.js";
+import getTransactions from "./get-transactions.js";
+import postTransactionToBudget from "./post-transaction-to-budget.js";
+import putTransaction from "./put-transaction.js";
+import deleteTransaction from "./delete-transaction.js";
+import getSaveGoals from "./get-save-goals.js";
+import getSaveGoal from "./get-save-goal.js";
 
 const all = (...routes) =>
   async function (param) {
@@ -23,7 +24,8 @@ const api = {
   putTransaction,
   postTransactionToBudget,
   deleteTransaction,
-  getSaveGoals
+  getSaveGoals,
+  getSaveGoal,
 };
 
 export default api;
