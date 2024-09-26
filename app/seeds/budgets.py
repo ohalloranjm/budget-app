@@ -36,6 +36,22 @@ demo_budgets = [
         user_id=2,
         icon='money'
     ),
+        Budget(
+        name='Fitness',
+        allocated=100000,
+        start_date=datetime(2024, 1, 1),
+        end_date=datetime(2024, 12, 30),
+        user_id=1,
+        icon='fitness'
+    ),
+    Budget(
+        name='Trave',
+        allocated=1000000,
+        start_date=datetime(2024, 1, 1),
+        end_date=datetime(2024, 12, 30),
+        user_id=1,
+        icon='trave'
+    ),
 ]
 
 def seed_budgets():

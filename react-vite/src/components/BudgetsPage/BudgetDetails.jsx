@@ -49,8 +49,8 @@ export default function BudgetDetails() {
       <p>Icon: {budget.icon}</p>
 
       <div className="buttons_budgets_detail">
-      <button onClick={() => navigate(`/budgets/${budget.id}/edit`)}>Edit Budget</button>
-      <button onClick={() => handleDelete(budget.id)}>Delete</button>
+        <button onClick={() => navigate(`/budgets/${budget.id}/edit`)}>Edit Budget</button>
+        <button onClick={() => handleDelete(budget.id)}>Delete</button>
       </div>
     
       {/* Transactions */}
@@ -62,13 +62,14 @@ export default function BudgetDetails() {
               <p>{transaction.name}</p>
               <p>Amount: {dollarString(transaction.amount)}</p>
               <p>Date: {formatDate(transaction.date)}</p>
-              <p>Description: {transaction.description || '—'}</p>
+              {/* <p>Description: {transaction.description || '—'}</p> */}
             </li>
           ))}
         </ul>
       ) : (
         <p>No transactions associated with this budget.</p>
       )}
+      <button onClick={() => navigate('/budgets')}>Go to Budgets List</button>
     </div>
   );
 }

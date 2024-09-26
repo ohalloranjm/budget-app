@@ -31,6 +31,34 @@ demo_transactions = [
         user_id=2,
         budget_id=1
     ),
+    Transaction(
+        name='Personal Trainer',
+        amount=30000,
+        date=datetime(2024, 9, 1),
+        user_id=1,
+        budget_id=5
+    ),
+    Transaction(
+        name='Personal Trainer',
+        amount=30000,
+        date=datetime(2024, 10, 1),
+        user_id=1,
+        budget_id=5
+    ),
+    Transaction(
+        name='Gym membership cost',
+        amount=5000,
+        date=datetime(2024, 9, 1),
+        user_id=1,
+        budget_id=5
+    ),
+    Transaction(
+        name='Gym membership cost',
+        amount=5000,
+        date=datetime(2024, 10, 1),
+        user_id=1,
+        budget_id=5
+    ),
 ]
 
 def seed_transactions():

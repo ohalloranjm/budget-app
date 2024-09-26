@@ -1,4 +1,3 @@
-
 body {
     background-color: #1c1c1c;
     color: #e0e0e0;
@@ -9,6 +8,10 @@ body {
     color: #32cd32; 
     text-align: center;
     margin-bottom: 20px;
+  }
+
+  .filterbymonth {
+    text-align: center;
   }
   
   /* ul {
@@ -143,8 +146,14 @@ body {
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
   }
   
   li p {
     margin: 5px 0;
+  }
+
+  .error-message {
+    color: red;
   }
