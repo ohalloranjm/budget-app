@@ -19,6 +19,7 @@ export default function BudgetSummary() {
 
     return <>
         <h1 className={redIf(totalSpent > totalBudgeted, "center")}>{dollarString(totalSpent)} / <span className="secondary-dark">{dollarString(totalBudgeted)}</span></h1>
+        <h2 className="center">{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][now.getMonth()]} {now.getFullYear()}</h2>
         <div className="budget-summary">
             {currentBudgets.map(b => <BudgetSummaryTile key={b.id} budget={b} transactions={currentTransactions.filter(t => t.Budget.id === b.id)} />)}
         </div>
