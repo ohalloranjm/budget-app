@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
+import './BudgetsForm.css';
+
+function toCents(dollar_amount) {
+  if (!isNaN(dollar_amount)) {
+    return Math.round(dollar_amount * 100);
+  }
+}
 
 export default function BudgetForm() {
   const [name, setName] = useState('');
@@ -9,19 +16,23 @@ export default function BudgetForm() {
   const [endDate, setEndDate] = useState('');
   const user = useSelector((state) => state.session.user);
   const [icon, setIcon] = useState('');
-  const { id } = useParams(); // Get budget id for editing budget
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      // Fetch budget data if editing
       fetch(`/api/budgets/${id}`)
         .then(res => res.json())
         .then(data => {
           setName(data.name);
-          setAllocated(data.allocated);
-          setStartDate(data.start_date);
-          setEndDate(data.end_date || '');
+          setAllocated(toCents(data.allocated));
+          
+          // Convert date to yyyy-MM-dd format
+          const formattedStartDate = new Date(data.start_date).toISOString().split('T')[0];
+          const formattedEndDate = data.end_date ? new Date(data.end_date).toISOString().split('T')[0] : '';
+          
+          setStartDate(formattedStartDate);
+          setEndDate(formattedEndDate);
           setIcon(data.icon);
         });
     }
@@ -29,7 +40,14 @@ export default function BudgetForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const budgetData = { name, allocated, start_date: startDate, end_date: endDate, user_id:user.id, icon };
+    const budgetData = { 
+      name, 
+      allocated,
+      start_date: startDate, 
+      end_date: endDate, 
+      user_id: user.id, 
+      icon 
+    };
 
     if (id) {
       // Edit existing budget
@@ -58,35 +76,40 @@ export default function BudgetForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-        placeholder="Budget Name" 
-        required 
+    <form onSubmit={handleSubmit} className="budget-form">
+      <input
+        name="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Budget Name"
+        required
       />
-      <input 
-        type="number" 
-        value={allocated} 
-        onChange={(e) => setAllocated(e.target.value)} 
-        placeholder="Allocated Amount" 
-        required 
+      <input
+        name="allocated"
+        type="number"
+        value={allocated}
+        onChange={(e) => setAllocated(e.target.value)}
+        placeholder="Allocated Amount"
+        required
       />
-      <input 
-        type="date" 
-        value={startDate} 
-        onChange={(e) => setStartDate(e.target.value)} 
-        required 
+      <input
+        name="startDate"
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        required
       />
-      <input 
-        type="date" 
-        value={endDate} 
-        onChange={(e) => setEndDate(e.target.value)} 
+      <input
+        name="endDate"
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
       />
-      <input 
-        value={icon} 
-        onChange={(e) => setIcon(e.target.value)} 
-        placeholder="Icon" 
+      <input
+        name="icon"
+        value={icon}
+        onChange={(e) => setIcon(e.target.value)}
+        placeholder="Icon"
       />
       <button type="submit">{id ? "Update" : "Create"} Budget</button>
     </form>

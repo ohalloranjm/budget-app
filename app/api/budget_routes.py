@@ -3,6 +3,8 @@ from app.models import db, Budget,Template,Transaction
 from flask_login import current_user, login_required
 from app.forms import BudgetForm, TransactionForm
 from app.utils import to_dollars
+from datetime import date, timedelta
+from calendar import monthrange
 
 budget_routes = Blueprint("budgets", __name__)
 
@@ -129,8 +131,8 @@ def budget(id):
 
     if not budget:
         return {"error": "Budget not found"}, 404
-    
-    return budget.to_dict_simple()
+
+    return budget.to_dict()
 
 
 # Create a new budget for the current user.
