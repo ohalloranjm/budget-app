@@ -14,6 +14,7 @@ import SaveGoalDetails from "../components/SaveGoalDetailsPage";
 import SaveGoalsForm from "../components/SaveGoalsForm";
 import TemplatesPage from "../components/TemplatesPage/TemplatesPage";
 import TemplateForm from "../components/TemplateFormPage";
+import TemplateDetails from "../components/TemplateDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,11 @@ export const router = createBrowserRouter([
         path: "/templates",
         element: <TemplatesPage />,
         loader: api.getTemplates,
+      },
+      {
+        path: "/templates/:templateId",
+        element: <TemplateDetails />,
+        loader: api.getTemplate,
       },
       {
         path: "/templates/new",

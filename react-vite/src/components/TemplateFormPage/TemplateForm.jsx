@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  redirect,
-  useLoaderData,
-  useNavigate,
-  useSubmit,
-} from "react-router-dom";
+import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 
 function TemplateForm({ edit }) {
   const submit = useSubmit();
