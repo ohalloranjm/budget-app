@@ -84,3 +84,7 @@ button.dark:disabled:hover {
     color: rgb(222, 20, 20);
     font-size: 0.9em;
 }
+
+.overspent {
+    color: rgb(222, 20, 20)
+}

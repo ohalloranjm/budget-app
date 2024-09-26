@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux"
 import BudgetSummary from "./BudgetSummary";
+import "./LandingPage.css"
 
 export default function LandingPage() {
   const user = useSelector((store) => store.session.user);
 
     
-    return <><h1 className="dark">Landing Page</h1>
-    {user ? <BudgetSummary /> : <p>'Sign up to get started.'</p>}
-    </>
+  return user ? <BudgetSummary /> : <p>'Sign up to get started.'</p>
 }
