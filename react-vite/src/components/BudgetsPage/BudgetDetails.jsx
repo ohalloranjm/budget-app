@@ -9,6 +9,8 @@ function formatDate(dateStr) {
   return `${month}/${day < 10 ? "0" : ""}${day}/${year}`;
 }
 
+
+
 function dollarString(money) {
   let [dollars, cents] = String(money).split(".");
   cents = cents ?? "00";
@@ -19,6 +21,13 @@ function dollarString(money) {
 export default function BudgetDetails() {
   const budget = useLoaderData();
   const navigate = useNavigate();
+
+  function calculateRollover(budget) {
+    const currentPeriodSpend = budget.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+    const rollover = budget.allocated - currentPeriodSpend;
+    return rollover;
+  }
+  
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this budget?");
@@ -45,7 +54,7 @@ export default function BudgetDetails() {
       <p className="budget-start-date">Start Date: {formatDate(budget.start_date)}</p>
       {budget.end_date && <p className="budget-end-date">End Date: {formatDate(budget.end_date) || "N/A"}</p>}
       <p className="budget-icon">Icon: {budget.icon}</p>
-
+      
       <div className="buttons-budget-detail">
         <button className="edit-budget-btn" onClick={() => navigate(`/budgets/${budget.id}/edit`)}>
           Edit Budget
@@ -69,6 +78,12 @@ export default function BudgetDetails() {
       ) : (
         <p className="no-transactions-message">No transactions associated with this budget.</p>
       )}
+    <div>
+           {/* Display balance value */}
+        {calculateRollover(budget) !== null && (
+          <p className="budget-rollover">Balance: {dollarString(calculateRollover(budget))}</p>
+        )}
+    </div>
 
       <div className="go-to-budgets" >
       <button className="go-to-budgets-btn" onClick={() => navigate("/budgets")}>
