@@ -9,11 +9,16 @@ import GenericError from '../components/GenericError';
 import Layout from './Layout';
 import TransactionsForm from '../components/TransactionsForm';
 import api from '../api';
+import LandingPage from '../components/LandingPage/';
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      {
+        path: '',
+        element: <LandingPage />
+      },
       {
         path: "/budgets",  // Review all budgets by current user
         element: <BudgetsPage></BudgetsPage>,
