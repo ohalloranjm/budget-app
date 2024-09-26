@@ -1,0 +1,14 @@
+.budget-summary {
+    max-width: 50%
+}
+
+.budget-summary-tile {
+    display: grid;
+    grid-template-columns: 2fr 1fr 10px 1fr; 
+    padding: 20px;
+    font-size: 1.5em;
+}
+
+.bst-allocated {
+    text-align: right
+}
