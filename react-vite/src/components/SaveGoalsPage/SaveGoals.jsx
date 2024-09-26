@@ -6,6 +6,7 @@ function SaveGoals() {
   console.log(saveGoals["Save Goals"]);
   return (
     <div className="save-goals">
+      <button>New</button>
       {saveGoals["Save Goals"].map((goal) => (
         <div className="template">
           <NavLink to={"/save-goals/" + goal.id}>{goal.name}</NavLink>

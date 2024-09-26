@@ -11,6 +11,7 @@ import TransactionsForm from "../components/TransactionsForm";
 import api from "../api";
 import SaveGoals from "../components/SaveGoalsPage";
 import SaveGoalDetails from "../components/SaveGoalDetailsPage";
+import SaveGoalsForm from "../components/SaveGoalsForm";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,11 @@ export const router = createBrowserRouter([
         path: "/save-goals/:saveGoalId",
         element: <SaveGoalDetails />,
         loader: api.getSaveGoal,
+      },
+      {
+        path: "/save-goals/new",
+        element: <SaveGoalsForm edit={false} />,
+        action: api.postSaveGoal,
       },
       {
         path: "/templates",
