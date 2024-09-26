@@ -40,7 +40,7 @@ export default function TransactionsForm({edit}) {
     const put = e => {
         e.preventDefault()
         const transaction = { name, amount: toCents(amount), date, description, budgetName }
-        submit(transaction, {method: 'post', encType: 'application/json'})
+        submit(transaction, {method: 'put', encType: 'application/json'})
     }
 
     return <>

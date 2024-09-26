@@ -4,12 +4,12 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
-    <ul>
+    <ul className="nav-links secondary-dark">
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
 
-      <li>
+      <li className="profile-button">
         <ProfileButton />
       </li>
     </ul>
