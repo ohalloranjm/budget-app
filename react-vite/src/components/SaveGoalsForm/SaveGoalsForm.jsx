@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { redirect, useSubmit } from "react-router-dom";
+import { redirect, useLoaderData, useSubmit } from "react-router-dom";
 import "./SaveGoalForm.css";
 import toCents from "../../utils/to-cents";
 
 function SaveGoalsForm({ edit }) {
   const submit = useSubmit();
-  const [name, setName] = useState("");
-  const [cost, setCost] = useState(0);
-  const [description, setDescription] = useState("");
+  const data = edit ? useLoaderData() : {};
+  const [name, setName] = useState(data.name || "");
+  const [cost, setCost] = useState(data.cost || 0);
+  const [description, setDescription] = useState(data.description || "");
   const [endDate, setEndDate] = useState(
-    new Date().toISOString().split("T")[0]
+    new Date(data.end_date).toISOString().split("T")[0] ||
+      new Date().toISOString().split("T")[0]
   );
-  const [icon, setIcon] = useState("");
+  console.log(data.end_date);
+  const [icon, setIcon] = useState(data.icon || "");
 
   const post = (e) => {
     e.preventDefault();
@@ -27,12 +30,20 @@ function SaveGoalsForm({ edit }) {
 
   const put = (e) => {
     e.preventDefault();
-    submit({}, { method: "put", encType: "application/json" });
+    const saveGoal = {
+      name,
+      cost: toCents(cost),
+      end_date: endDate,
+      description,
+      icon,
+    };
+    submit({ saveGoal }, { method: "PUT", encType: "application/json" });
+    console.log("heyyy");
   };
 
   return (
     <div className="save-goals-form-container">
-      <form className="save-goals-form" onSubmit={post}>
+      <form className="save-goals-form" onSubmit={put}>
         <p>Name</p>
         <input
           id="save-goal-name"
@@ -73,7 +84,9 @@ function SaveGoalsForm({ edit }) {
           onInput={(e) => setIcon(e.target.value)}
           value={icon}
         />
-        <button type="submit">SUBMIT THE FORM FOR CRYING OUT LOUD</button>
+        <button type="submit">
+          {edit ? "Update Save Goal" : "Create Save Goal"}
+        </button>
       </form>
     </div>
   );

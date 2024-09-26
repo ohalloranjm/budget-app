@@ -71,6 +71,12 @@ export const router = createBrowserRouter([
         action: api.postSaveGoal,
       },
       {
+        path: "/save-goals/:saveGoalId/edit",
+        element: <SaveGoalsForm edit={true} />,
+        loader: api.getSaveGoal,
+        action: api.putSaveGoal,
+      },
+      {
         path: "/templates",
         element: <div></div>,
       },
