@@ -3,13 +3,14 @@
     margin: auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-        "name name"
-        "allocated allocated"
-        "start-date end-date"
-        "icon icon"
-        "submit submit";
+        "name"
+        "allocated"
+        "start-date"
+        "end-date"
+        "icon"
+        "submit";
     gap: 15px;
 }
 
@@ -22,6 +23,7 @@
 }
 
 .budget-form button {
+    width: 103%;
     grid-area: submit;
     padding: 10px 15px;
     background-color: #28a745;
@@ -37,30 +39,20 @@
     background-color: #218838;
 }
 
-.budget-form button:disabled {
+/* .budget-form button:disabled {
     background-color: gray;
     cursor: not-allowed;
-}
+} */
 
 .budget-form input[type="date"] {
     font-size: 1.1em;
-}
-
-.budget-form input[type="number"] {
-    -moz-appearance: textfield;
-}
-
-.budget-form input[type="number"]::-webkit-outer-spin-button,
-.budget-form input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
 }
 
 .budget-form input::placeholder {
     color: #888;
 }
 
-/* Grid Item Areas */
+Grid Item Areas
 .budget-form input[name="name"] {
     grid-area: name;
 }
@@ -80,4 +72,3 @@
 .budget-form input[name="icon"] {
     grid-area: icon;
 }
-
