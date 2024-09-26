@@ -38,12 +38,11 @@ function SaveGoalsForm({ edit }) {
       icon,
     };
     submit({ saveGoal }, { method: "PUT", encType: "application/json" });
-    console.log("heyyy");
   };
 
   return (
     <div className="save-goals-form-container">
-      <form className="save-goals-form" onSubmit={put}>
+      <form className="save-goals-form" onSubmit={edit ? put : post}>
         <p>Name</p>
         <input
           id="save-goal-name"

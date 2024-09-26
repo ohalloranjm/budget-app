@@ -1,17 +1,24 @@
 import React from "react";
-import { redirect, useLoaderData } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 
 function TemplatesPage() {
-  const templates = useLoaderData() || [];
+  const { Templates } = useLoaderData() || [];
+  const navigate = useNavigate();
+  console.log(Templates);
   return (
     <div className="templates">
-      {templates.map((t) => (
-        <div className="template">
+      {Templates.map((t) => (
+        <div
+          className="template"
+          onClick={(e) => navigate("/templates" + t.id)}
+        >
           <h2>{t.name}</h2>
           <div className="template-update-delete"></div>
         </div>
       ))}
-      <button onClick={() => redirect("/")}>Create new template</button>
+      <button onClick={() => navigate("/templates/new")}>
+        Create new template
+      </button>
     </div>
   );
 }

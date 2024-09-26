@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import db, Template
+from app.models import db, Template, Budget
 from flask_login import current_user, login_required
 from ..forms import TemplateForm
 
@@ -44,7 +44,7 @@ def delete_template(template_id):
     return {"message": "Template successfully deleted", "Template": temp}
 
 
-@template_routes.route("/", methods=["post"])
+@template_routes.route("/", methods=["POST"])
 @login_required
 def post_new_template():
     """
@@ -68,3 +68,26 @@ def post_new_template():
         return {"errors": form.errors}, 400
 
     return
+
+@template_routes.route("/<int:template_id>/budgets", methods=["POST"])
+@login_required
+def post_budget_to_template(template_id):
+    """
+    Add an existing budget to an existing template
+    """
+    template = Template.query.get(template_id)
+    if not template:
+        return {"errors": {"message": "Template not found"}}, 404
+    
+    if not template.user_id == current_user.id:
+        return {"errors": {"message": "Unauthorized"}}, 401
+    
+    for key in request.json:
+        budget = Budget.query.get(key)
+        if not budget.user_id == current_user.id:
+            return {"errors": {"message": "Unauthorized"}}, 401
+        template.budgets.append(budget)
+
+    db.session.commit()
+
+    return template.to_dict()

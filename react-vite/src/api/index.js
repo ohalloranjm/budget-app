@@ -8,6 +8,8 @@ import getSaveGoals from "./get-save-goals.js";
 import getSaveGoal from "./get-save-goal.js";
 import postSaveGoal from "./post-save-goal.js";
 import putSaveGoal from "./put-save-goal.js";
+import getTemplates from "./get-templates.js";
+import postTemplate from "./post-template.js";
 
 const all = (...routes) =>
   async function (param) {
@@ -30,6 +32,8 @@ const api = {
   getSaveGoal,
   postSaveGoal,
   putSaveGoal,
+  getTemplates,
+  postTemplate,
 };
 
 export default api;
