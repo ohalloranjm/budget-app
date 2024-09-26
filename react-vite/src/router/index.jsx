@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <LandingPage />,
-        loader: api.getBudgets
+        loader: api.all(api.getBudgets, api.getTransactions)
       },
       {
         path: "/budgets",  // Review all budgets by current user
