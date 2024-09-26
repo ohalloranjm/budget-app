@@ -17,7 +17,8 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <LandingPage />
+        element: <LandingPage />,
+        loader: api.getBudgets
       },
       {
         path: "/budgets",  // Review all budgets by current user
