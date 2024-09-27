@@ -1,5 +1,7 @@
 .budget-summary {
-    max-width: 50%
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
 }
 
 .budget-summary-tile {
