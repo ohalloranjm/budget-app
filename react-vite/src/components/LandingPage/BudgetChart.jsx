@@ -1,8 +1,6 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 export default function BudgetChart({totalBudgeted, transactions, now}) {
-    const fakedata = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, {name: 'Page B', uv: 2400, pv: 400, amt: 2000}, {name: 'Page C', uv: 600, pv: 600, amt: 40}]
-    console.log(totalBudgeted, transactions)
 
     const month = now.getMonth()
     const year = now.getFullYear()
@@ -35,12 +33,14 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
     
     return <div className='bs-chart'>
         <h2 className='secondary-dark center'>Total Spending</h2>
-        <LineChart width={400} height={400} data={data}>
+        <ResponsiveContainer width='100%' height={500}>
+        <LineChart data={data}>
             <Line type='monotone' dataKey='spent' stroke='#8884d8' />
             <Line type='monotone' dataKey='budgeted' stroke='#aaffaa' />
             <CartesianGrid stroke='#ccc' strokeDasharray={'5 5'} />
             <XAxis dataKey='day' />
             <YAxis />
         </LineChart>
+        </ResponsiveContainer>
     </div>
 }
