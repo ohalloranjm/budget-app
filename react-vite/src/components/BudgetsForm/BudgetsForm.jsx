@@ -16,6 +16,7 @@ export default function BudgetForm() {
   const [endDate, setEndDate] = useState('');
   const user = useSelector((state) => state.session.user);
   const [icon, setIcon] = useState('');
+  const [errors, setErrors] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -38,8 +39,20 @@ export default function BudgetForm() {
     }
   }, [id]);
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!name.trim()) newErrors.name = "Budget name is required.";
+    if (!allocated || isNaN(allocated) || allocated <= 0) newErrors.allocated = "Allocated amount must be a positive number.";
+    if (!startDate) newErrors.startDate = "Start date is required.";
+    if (endDate && new Date(startDate) > new Date(endDate)) newErrors.endDate = "End date must be after the start date.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;  // If form is invalid, exit the function
+
     const budgetData = { 
       name, 
       allocated,
@@ -76,42 +89,56 @@ export default function BudgetForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="budget-form">
-      <input
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Budget Name"
-        required
-      />
-      <input
-        name="allocated"
-        type="number"
-        value={allocated}
-        onChange={(e) => setAllocated(e.target.value)}
-        placeholder="Allocated Amount"
-        required
-      />
-      <input
-        name="startDate"
-        type="date"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-        required
-      />
-      <input
-        name="endDate"
-        type="date"
-        value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-      />
-      <input
-        name="icon"
-        value={icon}
-        onChange={(e) => setIcon(e.target.value)}
-        placeholder="Icon"
-      />
-      <button type="submit">{id ? "Update" : "Create"} Budget</button>
-    </form>
+    <>
+      <h1 className="budget-form-title">{id ? 'Edit Budget' : 'Create Budget'}</h1>
+      <form onSubmit={handleSubmit} className="budget-form">
+        <input
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Budget Name"
+          className='budget-form-input'
+        />
+        <p className="error">{errors.name}</p>
+
+        <input
+          name="allocated"
+          type="number"
+          value={allocated}
+          onChange={(e) => setAllocated(e.target.value)}
+          placeholder="Allocated Amount"
+          className='budget-form-input'
+        />
+        <p className="error">{errors.allocated}</p>
+
+        <input
+          name="startDate"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className='budget-form-input'
+        />
+        <p className="error">{errors.startDate}</p>
+
+        <input
+          name="endDate"
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className='budget-form-input'
+        />
+        <p className="error">{errors.endDate}</p>
+
+        <input
+          name="icon"
+          value={icon}
+          onChange={(e) => setIcon(e.target.value)}
+          placeholder="Icon"
+          className='budget-form-input'
+        />
+
+        <button type="submit" className="budget-form-submit-btn">{id ? "Update" : "Create"} Budget</button>
+      </form>
+    </>
   );
 }

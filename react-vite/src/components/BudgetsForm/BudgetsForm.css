@@ -72,3 +72,25 @@ Grid Item Areas
 .budget-form input[name="icon"] {
     grid-area: icon;
 }
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  
+  .budget-form-input {
+    margin-bottom: 1rem;
+  }
+  
+  .budget-form-submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .budget-form-submit-btn:hover {
+    background-color: #45a049;
+  }
