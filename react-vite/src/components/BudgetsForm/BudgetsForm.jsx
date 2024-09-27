@@ -44,10 +44,11 @@ export default function BudgetForm() {
       name, 
       allocated,
       start_date: startDate, 
-      end_date: endDate, 
       user_id: user.id, 
       icon 
     };
+
+    if (endDate) budgetData.end_date = endDate
 
     if (id) {
       // Edit existing budget
