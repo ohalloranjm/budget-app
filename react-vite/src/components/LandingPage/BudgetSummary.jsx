@@ -25,7 +25,7 @@ export default function BudgetSummary() {
             <div className="bs-text">
                 {currentBudgets.map(b => <BudgetSummaryTile key={b.id} budget={b} transactions={currentTransactions.filter(t => t.Budget.id === b.id)} />)}
             </div>
-            <BudgetChart />
+            <BudgetChart totalBudgeted={totalBudgeted} transactions={currentTransactions} now={now} />
         </div>
         </>
 }
