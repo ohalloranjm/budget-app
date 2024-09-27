@@ -1,4 +1,4 @@
-import { LineChart, Line } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 export default function BudgetChart({totalBudgeted, transactions, now}) {
     const fakedata = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, {name: 'Page B', uv: 2400, pv: 400, amt: 2000}, {name: 'Page C', uv: 600, pv: 600, amt: 40}]
@@ -19,6 +19,7 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
     while (incrementDate()) {
         const point = {}
         point.date = date
+        point.day = day
         point.transactions = transactions.filter(t => {
             const tDate = new Date(t.date)
             return tDate.getDate() === day
@@ -32,8 +33,14 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
 
     console.log(data)
     
-    return <LineChart width={400} height={400} data={data}>
-        <Line type='monotone' dataKey='spent' stroke='#8884d8' />
-        <Line type='monotone' dataKey='budgeted' stroke='#aaffaa' />
-    </LineChart>
+    return <div className='bs-chart'>
+        <h2 className='secondary-dark center'>Total Spending</h2>
+        <LineChart width={400} height={400} data={data}>
+            <Line type='monotone' dataKey='spent' stroke='#8884d8' />
+            <Line type='monotone' dataKey='budgeted' stroke='#aaffaa' />
+            <CartesianGrid stroke='#ccc' strokeDasharray={'5 5'} />
+            <XAxis dataKey='day' />
+            <YAxis />
+        </LineChart>
+    </div>
 }
