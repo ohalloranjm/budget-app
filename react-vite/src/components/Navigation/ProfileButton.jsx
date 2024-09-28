@@ -53,9 +53,9 @@ function ProfileButton() {
             <>
               <li>{user.username}</li>
               <li>{user.email}</li>
-              <li><NavLink to='/transactions/new'>New Transaction</NavLink></li>
-              <li><NavLink to='/budgets'>My Budgets</NavLink></li>
-              <li><NavLink to='/transactions'>View All Transactions</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/transactions/new'>New Transaction</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/budgets'>My Budgets</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/transactions'>View All Transactions</NavLink></li>
               <li>
                 <button className='dark' onClick={logout}>Log Out</button>
               </li>
