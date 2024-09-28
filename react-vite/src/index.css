@@ -1,90 +1,92 @@
-body{
-    font-family:Arial, Helvetica, sans-serif
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .center {
-    text-align: center
+  text-align: center;
 }
 
 a {
-    color: inherit;
-    text-decoration: inherit
+  color: inherit;
+  text-decoration: inherit;
 }
 
 /* primar light theme */
 .primary {
-    /* primary WHITE-like VV */
-    background-color: azure; 
-    /*           VV VV VV VV primary BLACK-like */
-    color: rgb(31, 32, 30);
+  /* primary WHITE-like VV */
+  background-color: azure;
+  /*           VV VV VV VV primary BLACK-like */
+  color: rgb(31, 32, 30);
 }
 
-.secondary, a:hover {
-    background-color: azure;
-     /*           VV VV VV VV primary COLORED-like */
-    color: rgb(94, 255, 0);
-    text-shadow: 0px 0px 5px rgb(31, 32, 30);
+.secondary,
+a:hover {
+  background-color: azure;
+  /*           VV VV VV VV primary COLORED-like */
+  color: rgb(94, 255, 0);
+  text-shadow: 0px 0px 5px rgb(31, 32, 30);
 }
 
 .alert {
-    background-color: rgb(94, 255, 0);
-    color: azure;
-    text-shadow: 0px 0px 5px rgb(31, 32, 30);
+  background-color: rgb(94, 255, 0);
+  color: azure;
+  text-shadow: 0px 0px 5px rgb(31, 32, 30);
 }
 
 .alert-text {
-    color: azure;
-    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+  color: azure;
+  text-shadow: 2px 2px 2px rgb(31, 32, 30);
 }
 
 .primary-dark {
-    background-color: rgb(31, 32, 30);
-    color: azure;
+  background-color: rgb(31, 32, 30);
+  color: azure;
 }
 
-.secondary-dark, a.dark:hover {
-    background-color: rgb(31, 32, 30);
-    color: rgb(94, 255, 0);
+.secondary-dark,
+a.dark:hover {
+  background-color: rgb(31, 32, 30);
+  color: rgb(94, 255, 0);
 }
 
 .alert-dark {
-    background-color: rgb(94, 255, 0);
-    color: azure;
-    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+  background-color: rgb(94, 255, 0);
+  color: azure;
+  text-shadow: 2px 2px 2px rgb(31, 32, 30);
 }
 
 .alert-text-dark {
-    color: azure;
-    text-shadow: 2px 2px 2px rgb(31, 32, 30);
+  color: azure;
+  text-shadow: 2px 2px 2px rgb(31, 32, 30);
 }
 
 button.dark {
-    background-color: rgb(94, 255, 0);
-    color: rgb(31, 32, 30);
-    text-shadow: 2px 2px 2px azure;
+  background-color: rgb(94, 255, 0);
+  color: rgb(31, 32, 30);
+  text-shadow: 2px 2px 2px azure;
 }
 
 button.dark:hover {
-    background-color: azure;
-    box-shadow: 1px 1px 5px rgb(94, 255, 0);
-    cursor: pointer;
+  background-color: azure;
+  box-shadow: 1px 1px 5px rgb(94, 255, 0);
+  cursor: pointer;
 }
 
 button.dark:disabled {
-    background-color: azure;
-    color: rgb(199, 199, 199)
+  background-color: azure;
+  color: rgb(199, 199, 199);
 }
 
 button.dark:disabled:hover {
-    box-shadow: 0px 0px 0px;
-    cursor: inherit
+  box-shadow: 0px 0px 0px;
+  cursor: inherit;
 }
 
 .error {
-    color: rgb(222, 20, 20);
-    font-size: 0.9em;
+  color: rgb(222, 20, 20);
+  font-size: 0.9em;
 }
 
 .overspent {
-    color: rgb(222, 20, 20)
+  color: rgb(222, 20, 20);
 }

@@ -10,12 +10,25 @@ function TemplateForm({ edit }) {
   const [budgetsAdded, setBudgetsAdded] = useState(
     edit ? [...template.Budgets] : []
   );
+  const [errors, setErrors] = useState({});
   //name
   const [selected, setSelected] = useState(Budgets[0]);
   const handleClick = () => {
     if (!budgetsAdded.find((b) => b.id === selected.id)) {
       setBudgetsAdded([...budgetsAdded, selected]);
     }
+  };
+
+  const validateData = (data) => {
+    const validationErrors = {};
+    if (!data.name) {
+      validationErrors.name = "This field is required";
+    }
+    if (data.name.length > 50) {
+      validationErrors.name = "This field must be less than 50 chars";
+    }
+    console.log(Object.keys(validationErrors), validationErrors);
+    return Object.keys(validationErrors).length > 0 ? validationErrors : false;
   };
 
   const post = (e) => {
@@ -27,10 +40,15 @@ function TemplateForm({ edit }) {
       acc[b.id] = b;
       return acc;
     }, {});
-    submit(
-      { template, budgets },
-      { method: "post", encType: "application/json" }
-    );
+
+    const validationErrors = validateData(template);
+    if (validationErrors) {
+      return setErrors({ ...validationErrors });
+    } else
+      submit(
+        { template, budgets },
+        { method: "post", encType: "application/json" }
+      );
   };
 
   const put = (e) => {
@@ -43,10 +61,14 @@ function TemplateForm({ edit }) {
       acc[b.id] = b;
       return acc;
     }, {});
-    submit(
-      { template, budgets },
-      { method: "post", encType: "application/json" }
-    );
+    const validationErrors = validateData(template);
+    if (validationErrors) {
+      return setErrors({ ...validationErrors });
+    } else
+      submit(
+        { template, budgets },
+        { method: "post", encType: "application/json" }
+      );
   };
 
   return (
@@ -59,6 +81,7 @@ function TemplateForm({ edit }) {
           onInput={(e) => setName(e.target.value)}
           value={name}
         />
+        {errors.name && <p className="alert-text">{errors.name}</p>}
         <div className="template-form-added-budgets">
           {budgetsAdded.map((ba, i) => (
             <span>
