@@ -15,6 +15,22 @@ function SaveGoalsForm({ edit }) {
       : new Date().toISOString().split("T")[0]
   );
   const [icon, setIcon] = useState(edit ? data.icon : "");
+  const [errors, setErrors] = useState({});
+  const validateData = (data) => {
+    const validationErrors = {};
+    if (!data.name) {
+      validationErrors.name = "This field is required";
+    }
+    if (data.name.length > 50) {
+      validationErrors.name = "This field must be less than 50 chars";
+    }
+    if (new Date(endDate).getTime() < new Date().getTime()) {
+      validationErrors.date = "End date cannot be before the current date";
+    }
+
+    console.log(Object.keys(validationErrors), validationErrors);
+    return Object.keys(validationErrors).length > 0 ? validationErrors : false;
+  };
 
   const post = (e) => {
     e.preventDefault();
@@ -25,7 +41,11 @@ function SaveGoalsForm({ edit }) {
       description,
       icon,
     };
-    submit({ saveGoal }, { method: "post", encType: "application/json" });
+    const validationErrors = validateData(saveGoal);
+    if (validationErrors) {
+      return setErrors({ ...validationErrors });
+    } else
+      submit({ saveGoal }, { method: "post", encType: "application/json" });
   };
 
   const put = (e) => {
@@ -37,13 +57,17 @@ function SaveGoalsForm({ edit }) {
       description,
       icon,
     };
-    submit({ saveGoal }, { method: "PUT", encType: "application/json" });
+    const validationErrors = validateData(saveGoal);
+    if (validationErrors) {
+      return setErrors({ ...validationErrors });
+    } else submit({ saveGoal }, { method: "PUT", encType: "application/json" });
   };
 
   return (
     <div className="save-goals-form-container">
       <form className="save-goals-form" onSubmit={edit ? put : post}>
         <p>Name</p>
+        {errors.name && <p className="alert-text">{errors.name}</p>}
         <input
           id="save-goal-name"
           type="text"
@@ -68,6 +92,7 @@ function SaveGoalsForm({ edit }) {
           value={Math.floor(cost * 100) / 100}
         />
         <p>Due Date</p>
+        {errors.date && <p className="alert-text">{errors.date}</p>}
         <input
           id="save-goal-due-date"
           type="date"
