@@ -1,4 +1,4 @@
-import { useLoaderData, useSubmit } from "react-router-dom";
+import { Link, useLoaderData, useSubmit } from "react-router-dom";
 import BudgetSummaryTile from "./BudgetSummaryTile";
 import dollarString from "../../utils/dollar-string"
 import redIf from "../../utils/red-if"
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export default function BudgetSummary() {
     const [{Budgets}, {Transactions}] = useLoaderData()
     const now = new Date()
-    const currentBudgets = Budgets?.filter(b => !b.end_date || new Date(b.end_date) > now)
+    const currentBudgets = Budgets?.filter(b => (new Date(b.start_date) < now) && (!b.end_date || (new Date(b.end_date) > now)))
     const currentTransactions = Transactions?.filter(t => {
         const [month, year] = [now.getMonth(), now.getFullYear()]
         const tDate = new Date(t.date)
@@ -29,6 +29,7 @@ export default function BudgetSummary() {
         <h2 className="center">{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][now.getMonth()]} {now.getFullYear()}</h2>
         <div className="budget-summary">
             <div className="bs-text">
+                {!currentBudgets.length && <Link className="secondary-dark" to="/budgets/new">No budgets active for this month. Create a budget to get started.</Link>}
                 {currentBudgets.map(b => <BudgetSummaryTile key={b.id} budget={b} transactions={currentTransactions?.filter(t => t.Budget.id === b.id)} />)}
             </div>
             <BudgetChart totalBudgeted={totalBudgeted} transactions={currentTransactions} now={now} />
