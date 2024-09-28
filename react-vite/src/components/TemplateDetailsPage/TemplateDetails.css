@@ -1,0 +1,16 @@
+.template-summary-budget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
+.template-summary-budget:hover {
+  background-color: #444;
+}

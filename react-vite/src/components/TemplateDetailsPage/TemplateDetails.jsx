@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import "./TemplateDetails.css";
 
 function TemplateDetails() {
   const navigate = useNavigate();
@@ -37,14 +38,14 @@ function TemplateDetails() {
       ) : (
         <button>Copy Template</button>
       )}
-      <h2>{template.name}</h2>
+      <h2>{template.name}</h2>{" "}
       {budgets.map((b) => (
         <div
           className="template-summary-budget"
           onClick={() => navigate("/budgets/" + b.id)}
         >
           <p>{b.name}</p>
-          <p>{b.allocated}</p>
+          <p>${b.allocated}</p>
         </div>
       ))}
     </div>
