@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import './BudgetsForm.css';
+import "./BudgetsForm.css";
 
 function toCents(dollar_amount) {
   if (!isNaN(dollar_amount)) {
@@ -10,12 +10,12 @@ function toCents(dollar_amount) {
 }
 
 export default function BudgetForm() {
-  const [name, setName] = useState('');
-  const [allocated, setAllocated] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [name, setName] = useState("");
+  const [allocated, setAllocated] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const user = useSelector((state) => state.session.user);
-  const [icon, setIcon] = useState('');
+  const [icon, setIcon] = useState("");
   const [errors, setErrors] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,15 +23,19 @@ export default function BudgetForm() {
   useEffect(() => {
     if (id) {
       fetch(`/api/budgets/${id}`)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           setName(data.name);
-          setAllocated(toCents(data.allocated));
-          
+          setAllocated(data.allocated);
+
           // Convert date to yyyy-MM-dd format
-          const formattedStartDate = new Date(data.start_date).toISOString().split('T')[0];
-          const formattedEndDate = data.end_date ? new Date(data.end_date).toISOString().split('T')[0] : '';
-          
+          const formattedStartDate = new Date(data.start_date)
+            .toISOString()
+            .split("T")[0];
+          const formattedEndDate = data.end_date
+            ? new Date(data.end_date).toISOString().split("T")[0]
+            : "";
+
           setStartDate(formattedStartDate);
           setEndDate(formattedEndDate);
           setIcon(data.icon);
@@ -42,45 +46,47 @@ export default function BudgetForm() {
   const validateForm = () => {
     const newErrors = {};
     if (!name.trim()) newErrors.name = "Budget name is required.";
-    if (!allocated || isNaN(allocated) || allocated <= 0) newErrors.allocated = "Allocated amount must be a positive number.";
+    if (!allocated || isNaN(allocated) || allocated <= 0)
+      newErrors.allocated = "Allocated amount must be a positive number.";
     if (!startDate) newErrors.startDate = "Start date is required.";
-    if (endDate && new Date(startDate) > new Date(endDate)) newErrors.endDate = "End date must be after the start date.";
+    if (endDate && new Date(startDate) > new Date(endDate))
+      newErrors.endDate = "End date must be after the start date.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;  // If form is invalid, exit the function
+    if (!validateForm()) return; // If form is invalid, exit the function
 
-    const budgetData = { 
-      name, 
-      allocated,
-      start_date: startDate, 
-      user_id: user.id, 
-      icon 
+    const budgetData = {
+      name,
+      allocated: allocated * 100,
+      start_date: startDate,
+      user_id: user.id,
+      icon,
     };
 
-    if (endDate) budgetData.end_date = endDate
+    if (endDate) budgetData.end_date = endDate;
 
     if (id) {
       // Edit existing budget
       const res = await fetch(`/api/budgets/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(budgetData)
+        body: JSON.stringify(budgetData),
       });
       if (res.ok) navigate(`/budgets/${id}`);
     } else {
       // Create new budget
-      const res = await fetch('/api/budgets', {
-        method: 'POST',
+      const res = await fetch("/api/budgets", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(budgetData)
+        body: JSON.stringify(budgetData),
       });
       if (res.ok) {
         const newBudget = await res.json();
@@ -91,14 +97,16 @@ export default function BudgetForm() {
 
   return (
     <>
-      <h1 className="budget-form-title">{id ? 'Edit Budget' : 'Create Budget'}</h1>
+      <h1 className="budget-form-title">
+        {id ? "Edit Budget" : "Create Budget"}
+      </h1>
       <form onSubmit={handleSubmit} className="budget-form">
         <input
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Budget Name"
-          className='budget-form-input'
+          className="budget-form-input"
         />
         <p className="error">{errors.name}</p>
 
@@ -108,7 +116,7 @@ export default function BudgetForm() {
           value={allocated}
           onChange={(e) => setAllocated(e.target.value)}
           placeholder="Allocated Amount"
-          className='budget-form-input'
+          className="budget-form-input"
         />
         <p className="error">{errors.allocated}</p>
 
@@ -117,7 +125,7 @@ export default function BudgetForm() {
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className='budget-form-input'
+          className="budget-form-input"
         />
         <p className="error">{errors.startDate}</p>
 
@@ -126,7 +134,7 @@ export default function BudgetForm() {
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className='budget-form-input'
+          className="budget-form-input"
         />
         <p className="error">{errors.endDate}</p>
 
@@ -135,10 +143,12 @@ export default function BudgetForm() {
           value={icon}
           onChange={(e) => setIcon(e.target.value)}
           placeholder="Icon"
-          className='budget-form-input'
+          className="budget-form-input"
         />
 
-        <button type="submit" className="budget-form-submit-btn">{id ? "Update" : "Create"} Budget</button>
+        <button type="submit" className="budget-form-submit-btn">
+          {id ? "Update" : "Create"} Budget
+        </button>
       </form>
     </>
   );
