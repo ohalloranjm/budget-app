@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ModalProvider, Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation/Navigation";
-import LandingPage from "../components/LandingPage";
+import SessionPrompt from "../components/LandingPage/SessionPrompt";
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Layout() {
   }, [dispatch]);
 
   const user = useSelector(store => store.session.user)
-  const content = user ? <Outlet /> : <LandingPage />
+  const content = user ? <Outlet /> : <SessionPrompt />
 
   return (
     <>
