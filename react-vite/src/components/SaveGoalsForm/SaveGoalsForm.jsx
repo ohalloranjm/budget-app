@@ -66,6 +66,9 @@ function SaveGoalsForm({ edit }) {
   return (
     <div className="save-goals-form-container">
       <form className="save-goals-form" onSubmit={edit ? put : post}>
+        <h2 className="secondary-dark">
+          {edit ? "Update a Tempalte" : "Create a New Template"}
+        </h2>
         <p>Name</p>
         {errors.name && <p className="alert-text">{errors.name}</p>}
         <input
@@ -108,7 +111,7 @@ function SaveGoalsForm({ edit }) {
           onInput={(e) => setIcon(e.target.value)}
           value={icon}
         />
-        <button type="submit">
+        <button type="submit" className="dark">
           {edit ? "Update Save Goal" : "Create Save Goal"}
         </button>
       </form>

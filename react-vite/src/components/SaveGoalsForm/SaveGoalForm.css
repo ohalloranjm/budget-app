@@ -1,3 +1,33 @@
 textarea {
   resize: none;
 }
+
+.save-goals-form-container {
+  max-width: 700px;
+  padding: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.save-goals-form-container input,
+textarea {
+  width: 100%;
+}
+
+.save-goals-form-container * {
+  width: 100%;
+  padding: 0px;
+  border: none;
+  min-height: 35px;
+}
+
+.save-goals-form-container button {
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.save-goals-form-container {
+  margin: none;
+}
