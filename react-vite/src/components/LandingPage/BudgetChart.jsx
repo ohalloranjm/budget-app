@@ -32,7 +32,6 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
     console.log(data)
     
     return <div className='bs-chart'>
-        <h2 className='secondary-dark center'>Total Spending</h2>
         <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
             <Line type='monotone' dataKey='spent' stroke='#8884d8' />
@@ -42,5 +41,6 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
             <YAxis />
         </LineChart>
         </ResponsiveContainer>
+        <h2 className='secondary-dark center'>Total Monthly Spending</h2>
     </div>
 }
