@@ -34,13 +34,14 @@ export default function BudgetChart({totalBudgeted, transactions, now}) {
     return <div className='bs-chart'>
         <ResponsiveContainer width='100%' height={500}>
         <LineChart data={data}>
-            <Line type='monotone' dataKey='spent' stroke='#8884d8' />
-            <Line type='monotone' dataKey='budgeted' stroke='#aaffaa' />
+            <Line type='monotone' dataKey='spent' stroke='#5EFF00' />
+            <Line type='monotone' dataKey='budgeted' stroke='#8884d8' />
             <CartesianGrid stroke='#ccc' strokeDasharray={'5 5'} />
             <XAxis dataKey='day' />
             <YAxis />
         </LineChart>
         </ResponsiveContainer>
         <h2 className='secondary-dark center'>Total Monthly Spending</h2>
+        <h3 className='purple center'>Allocated Budget</h3>
     </div>
 }

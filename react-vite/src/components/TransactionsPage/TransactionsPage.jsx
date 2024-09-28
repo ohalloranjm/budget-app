@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useSubmit } from "react-router-dom"
+import { Navigate, useLoaderData, useNavigate, useSubmit } from "react-router-dom"
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import TransactionSummary from "./TransactionSummary"
@@ -11,10 +11,11 @@ export default function TransactionsPage() {
     const navigate = useNavigate()
     useEffect(() => {
         submit()
-    }, [user, submit])
+    }, [submit])
 
     const makeNew = () => navigate('new')
 
+    if (!user) return <Navigate to='/' />
     if (!Transactions) return null
     return <div>
         <button className='dark new-transaction-button' onClick={makeNew}>New Transaction</button>

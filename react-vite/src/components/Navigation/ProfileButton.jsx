@@ -5,13 +5,14 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const navigate = useNavigate()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -38,6 +39,7 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     closeMenu();
+    navigate('/')
   };
 
   return (
@@ -51,9 +53,9 @@ function ProfileButton() {
             <>
               <li>{user.username}</li>
               <li>{user.email}</li>
-              <li><NavLink to='/transactions/new'>New Transaction</NavLink></li>
-              <li><NavLink to='/budgets'>My Budgets</NavLink></li>
-              <li><NavLink to='/transactions'>View All Transactions</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/transactions/new'>New Transaction</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/budgets'>My Budgets</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/transactions'>View All Transactions</NavLink></li>
               <li>
                 <button className='dark' onClick={logout}>Log Out</button>
               </li>
