@@ -88,6 +88,13 @@ export const router = createBrowserRouter([
         path: "/templates/:templateId",
         element: <TemplateDetails />,
         loader: api.getTemplate,
+        action: api.deleteTemplate,
+      },
+      {
+        path: "/templates/:templateId/edit",
+        element: <TemplateForm edit={true} />,
+        loader: api.getTemplate,
+        action: api.putTemplate,
       },
       {
         path: "/templates/new",

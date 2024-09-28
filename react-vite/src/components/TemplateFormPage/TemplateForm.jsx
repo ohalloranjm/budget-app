@@ -3,13 +3,17 @@ import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 
 function TemplateForm({ edit }) {
   const submit = useSubmit();
-  const [name, setName] = useState("");
-  const [budgetsAdded, setBudgetsAdded] = useState([]);
-
-  const { Budgets } = useLoaderData();
+  const loader = useLoaderData();
+  const template = loader.template;
+  const Budgets = edit ? loader.budgets.Budgets : loader.Budgets;
+  const [name, setName] = useState(edit ? template.name : "");
+  const [budgetsAdded, setBudgetsAdded] = useState(
+    edit ? [...template.Budgets] : []
+  );
+  //name
   const [selected, setSelected] = useState(Budgets[0]);
   const handleClick = () => {
-    if (!budgetsAdded.includes(selected)) {
+    if (!budgetsAdded.find((b) => b.id === selected.id)) {
       setBudgetsAdded([...budgetsAdded, selected]);
     }
   };
@@ -30,6 +34,7 @@ function TemplateForm({ edit }) {
   };
 
   const put = (e) => {
+    console.log(name);
     e.preventDefault();
     const template = {
       name,
@@ -61,6 +66,11 @@ function TemplateForm({ edit }) {
               <button
                 type="button"
                 onClick={() => {
+                  console.log(
+                    budgetsAdded.slice(0, i),
+                    budgetsAdded[i],
+                    budgetsAdded.slice(i + 1)
+                  );
                   setBudgetsAdded([
                     ...budgetsAdded.slice(0, i),
                     ...budgetsAdded.slice(i + 1),
@@ -98,7 +108,9 @@ function TemplateForm({ edit }) {
             Add Budget
           </button>
         </div>
-        <button type="submit">Create Template</button>
+        <button type="submit">
+          {edit ? "Update Template" : "Create Template"}
+        </button>
       </form>
     </>
   );

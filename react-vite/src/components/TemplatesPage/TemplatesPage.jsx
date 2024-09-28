@@ -10,7 +10,7 @@ function TemplatesPage() {
       {Templates.map((t) => (
         <div
           className="template"
-          onClick={(e) => navigate("/templates" + t.id)}
+          onClick={(e) => navigate("/templates/" + t.id)}
         >
           <h2>{t.name}</h2>
           <div className="template-update-delete"></div>

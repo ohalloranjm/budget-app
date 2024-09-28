@@ -6,15 +6,15 @@ import toCents from "../../utils/to-cents";
 function SaveGoalsForm({ edit }) {
   const submit = useSubmit();
   const data = edit ? useLoaderData() : {};
-  const [name, setName] = useState(data.name || "");
-  const [cost, setCost] = useState(data.cost || 0);
-  const [description, setDescription] = useState(data.description || "");
+  const [name, setName] = useState(edit ? data.name : "");
+  const [cost, setCost] = useState(edit ? data.cost : 0);
+  const [description, setDescription] = useState(edit ? data.description : "");
   const [endDate, setEndDate] = useState(
-    new Date(data.end_date).toISOString().split("T")[0] ||
-      new Date().toISOString().split("T")[0]
+    edit
+      ? new Date(data.end_date).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0]
   );
-  console.log(data.end_date);
-  const [icon, setIcon] = useState(data.icon || "");
+  const [icon, setIcon] = useState(edit ? data.icon : "");
 
   const post = (e) => {
     e.preventDefault();
