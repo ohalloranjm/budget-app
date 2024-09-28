@@ -67,6 +67,7 @@ export const router = createBrowserRouter([
         path: "/save-goals/:saveGoalId",
         element: <SaveGoalDetails />,
         loader: api.getSaveGoal,
+        action: api.deleteSaveGoal,
       },
       {
         path: "/save-goals/new",

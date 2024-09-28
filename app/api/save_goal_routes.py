@@ -37,6 +37,7 @@ def delete_save_goal(save_goal_id):
     """
     Delete a save goal by ID
     """
+    print('\n\n\n\n\n\n\n\n ######################## \n\n\n\n\n\n\n')
     save_goal = SaveGoal.query.get(save_goal_id)
     if not save_goal:
         return {"errors": {"message": "Save goal not found"}}, 404

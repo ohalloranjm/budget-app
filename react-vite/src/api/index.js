@@ -13,6 +13,7 @@ import postTemplate from "./post-template.js";
 import getTemplate from "./get-template.js";
 import deleteTemplate from "./delete-template.js";
 import putTemplate from "./put-template.js";
+import deleteSaveGoal from "./delete-save-goal.js";
 
 const all = (...routes) =>
   async function (param) {
@@ -40,6 +41,7 @@ const api = {
   getTemplate,
   deleteTemplate,
   putTemplate,
+  deleteSaveGoal,
 };
 
 export default api;
