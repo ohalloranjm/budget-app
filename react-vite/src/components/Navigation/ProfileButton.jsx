@@ -56,6 +56,8 @@ function ProfileButton() {
               <li><NavLink onClick={closeMenu} to='/transactions/new'>New Transaction</NavLink></li>
               <li><NavLink onClick={closeMenu} to='/budgets'>My Budgets</NavLink></li>
               <li><NavLink onClick={closeMenu} to='/transactions'>View All Transactions</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/save-goals'>Save Goals</NavLink></li>
+              <li><NavLink onClick={closeMenu} to='/templates'>Budget Templates</NavLink></li>
               <li>
                 <button className='dark' onClick={logout}>Log Out</button>
               </li>
