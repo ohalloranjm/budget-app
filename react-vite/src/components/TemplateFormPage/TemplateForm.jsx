@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import "./TemplateForm.css";
 
 function TemplateForm({ edit }) {
   const submit = useSubmit();
@@ -72,8 +73,9 @@ function TemplateForm({ edit }) {
   };
 
   return (
-    <>
+    <div className="template-form-container">
       <form action="post" onSubmit={edit ? put : post}>
+        <p>Template Name</p>
         <input
           type="text"
           placeholder="Template Name"
@@ -83,8 +85,9 @@ function TemplateForm({ edit }) {
         />
         {errors.name && <p className="alert-text">{errors.name}</p>}
         <div className="template-form-added-budgets">
+          <p>Budgets</p>
           {budgetsAdded.map((ba, i) => (
-            <span>
+            <span className="template-form-budget">
               <p>{ba.name + " | " + `$${ba.allocated}`}</p>
               <button
                 type="button"
@@ -131,11 +134,11 @@ function TemplateForm({ edit }) {
             Add Budget
           </button>
         </div>
-        <button type="submit">
+        <button type="submit" className="dark">
           {edit ? "Update Template" : "Create Template"}
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

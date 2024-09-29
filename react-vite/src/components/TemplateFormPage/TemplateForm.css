@@ -1,0 +1,62 @@
+.template-form-budget {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.template-form-container {
+  max-width: 700px;
+  padding: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.template-form-container > form > * {
+  width: 100%;
+  padding: 0px;
+  border: none;
+  min-height: 35px;
+  margin: 5px 0px;
+}
+
+.template-form-container p {
+  margin: 5px 0px;
+  height: 35px;
+}
+.template-form-container input,
+textarea {
+  width: 100%;
+}
+
+.template-form-budget:hover {
+  background-color: #444;
+}
+
+.template-form-budgets {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.template-form-budgets * {
+  min-height: 35px;
+}
+
+.template-form-budgets > select {
+  width: 70%;
+}
+
+.template-form-budgets > button {
+  width: 29%;
+}
