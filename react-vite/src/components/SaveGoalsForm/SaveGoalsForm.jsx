@@ -7,7 +7,7 @@ function SaveGoalsForm({ edit }) {
   const submit = useSubmit();
   const data = edit ? useLoaderData() : {};
   const [name, setName] = useState(edit ? data.name : "");
-  const [cost, setCost] = useState(edit ? data.cost : 0);
+  const [cost, setCost] = useState(edit ? data.cost / 100 : 0);
   const [description, setDescription] = useState(edit ? data.description : "");
   const [endDate, setEndDate] = useState(
     edit
