@@ -27,23 +27,6 @@ function TemplateDetails() {
 
   return user ? (
     <div className="template-summary">
-      {user.id === creator.id ? (
-        <>
-          <button onClick={deleter}>Delete Template</button>
-          <button onClick={() => navigate(`/templates/${template.id}/edit`)}>
-            Update Template
-          </button>
-          <button
-            onClick={() =>
-              navigator.clipboard.writeText("/templates/" + template.id)
-            }
-          >
-            Copy Share Link
-          </button>
-        </>
-      ) : (
-        <button>Copy Template</button>
-      )}
       <h2>{template.name}</h2>{" "}
       {budgets.map((b) => (
         <div
@@ -54,6 +37,29 @@ function TemplateDetails() {
           <p>${b.allocated}</p>
         </div>
       ))}
+      {user.id === creator.id ? (
+        <>
+          <button className="dark" onClick={deleter}>
+            Delete Template
+          </button>
+          <button
+            className="dark"
+            onClick={() => navigate(`/templates/${template.id}/edit`)}
+          >
+            Update Template
+          </button>
+          <button
+            className="dark"
+            onClick={() =>
+              navigator.clipboard.writeText("/templates/" + template.id)
+            }
+          >
+            Copy Share Link
+          </button>
+        </>
+      ) : (
+        <button>Copy Template</button>
+      )}
     </div>
   ) : (
     "Not Signed In"
