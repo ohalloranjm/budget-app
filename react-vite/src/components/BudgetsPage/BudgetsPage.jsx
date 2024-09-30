@@ -28,8 +28,8 @@ export default function BudgetsPage() {
     setSelectedMonth(value);
     const year = +(value.slice(0,4))
     const month = +(value.slice(5)) - 1
-    setMonthStart(new Date(year, month))
-    setMonthEnd(new Date(year, month + 1))
+    setMonthStart(Date.UTC(year, month))
+    setMonthEnd(Date.UTC(year, month + 1))
     setIsFiltered(true);
   };
 
@@ -45,6 +45,7 @@ export default function BudgetsPage() {
     const budgetStart = new Date(budget.start_date)
     const budgetEnd = budget.end_date ? new Date(budget.end_date) : null
     if (budgetEnd && budgetEnd < monthStart) return false;
+    if (budget.id === 5) console.log('budgetStart', budgetStart, '\n', 'monthEnd', monthEnd, '\n', budgetStart === monthEnd)
     if (budgetStart >= monthEnd) return false;
     return true
   });
