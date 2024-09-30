@@ -1,0 +1,22 @@
+.save-goal-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+.save-goal-details * {
+  min-height: 35px;
+}
+
+.save-goal-details span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-goal-details span p {
+  min-height: auto;
+}
