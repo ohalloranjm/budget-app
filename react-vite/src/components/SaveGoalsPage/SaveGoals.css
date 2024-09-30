@@ -1,23 +1,21 @@
-.template {
+.save-goal {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: #333;
   border: 1px solid #444;
-  padding: 15px;
   margin-bottom: 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-.template * {
-  text-align: center;
+.save-goal > * {
+  padding: 10px;
 }
-.template:hover {
+.save-goal:hover {
   background-color: #444;
 }
 
-.templates * {
+.save-goals > * {
   width: 100%;
   padding: 0px;
   border: none;
