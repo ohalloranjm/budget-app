@@ -9,3 +9,8 @@
     flex-direction: column;
     gap: 10px
 }
+
+.login-demo {
+    cursor: pointer;
+    font-size: 0.8em;
+}
