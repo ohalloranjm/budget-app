@@ -15,6 +15,12 @@ function SaveGoalDetails() {
   const curr_date_num = new Date().getTime();
   const deleteSaveGoal = (e) => {
     e.preventDefault();
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Save Goal?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
     submit(
       { id: saveGoal.id },
       { method: "delete", encType: "application/json" }

@@ -12,6 +12,12 @@ function TemplateDetails() {
 
   const deleter = async (e) => {
     e.preventDefault();
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Template?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
     submit(
       { id: template.id },
       { method: "delete", encType: "application/json" }
