@@ -67,7 +67,7 @@ function SaveGoalsForm({ edit }) {
     <div className="save-goals-form-container">
       <form className="save-goals-form" onSubmit={edit ? put : post}>
         <h2 className="secondary-dark">
-          {edit ? "Update a Tempalte" : "Create a New Template"}
+          {edit ? "Update a Save Goal" : "Create a New Save Goal"}
         </h2>
         <p>Name</p>
         {errors.name && <p className="alert-text">{errors.name}</p>}
