@@ -14,3 +14,14 @@
 .template-summary-budget:hover {
   background-color: #444;
 }
+
+.template-summary > * {
+  min-height: 35px;
+  text-align: center;
+}
+
+.template-summary {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

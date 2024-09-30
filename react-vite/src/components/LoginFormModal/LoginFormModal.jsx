@@ -31,6 +31,18 @@ function LoginFormModal() {
     }
   };
 
+  const loginDemo = async () => {
+    await dispatch(
+      thunkLogin({
+        email: 'demo@aa.io',
+        password: 'password'
+      })
+    );
+
+    closeModal();
+    navigate('/')
+  }
+
   return (
     <>
       <h1 className="modal-title primary center">Log In</h1>
@@ -52,6 +64,7 @@ function LoginFormModal() {
           />
         {errors.password && <p>{errors.password}</p>}
         <button className="dark" type="submit">Log In</button>
+        <a className='login-demo center' onClick={loginDemo}>Log In as Demo User</a>
       </form>
     </>
   );

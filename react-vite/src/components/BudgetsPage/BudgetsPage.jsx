@@ -12,25 +12,42 @@ function dollarString(money) {
 
 export default function BudgetsPage() {
   const { Budgets } = useLoaderData();
+  console.log(Budgets);
 
   const [selectedMonth, setSelectedMonth] = useState("");
+  const [monthStart, setMonthStart] = useState('');
+  const [monthEnd, setMonthEnd] = useState('');
   const [isFiltered, setIsFiltered] = useState(false);
 
+  console.log('selectedMonth', selectedMonth)
+  console.log('monthStart', monthStart)
+  console.log('monthEnd', monthEnd)
+
   const handleMonthChange = (e) => {
-    setSelectedMonth(e.target.value);
+    const { value } = e.target
+    setSelectedMonth(value);
+    const year = +(value.slice(0,4))
+    const month = +(value.slice(5)) - 1
+    setMonthStart(Date.UTC(year, month))
+    setMonthEnd(Date.UTC(year, month + 1))
     setIsFiltered(true);
   };
 
   const displayAllBudgets = () => {
     setSelectedMonth("");
+    setYear("");
+    setMonth("");
     setIsFiltered(false);
   };
 
   const filteredBudgets = Budgets.filter((budget) => {
     if (!selectedMonth) return true;
-    const startDate = new Date(budget.start_date);
-    const budgetMonth = format(startDate, "yyyy-MM");
-    return budgetMonth === selectedMonth;
+    const budgetStart = new Date(budget.start_date)
+    const budgetEnd = budget.end_date ? new Date(budget.end_date) : null
+    if (budgetEnd && budgetEnd < monthStart) return false;
+    if (budget.id === 5) console.log('budgetStart', budgetStart, '\n', 'monthEnd', monthEnd, '\n', budgetStart === monthEnd)
+    if (budgetStart >= monthEnd) return false;
+    return true
   });
 
   if (!Budgets) return <p className="no-budgets">No budgets found.</p>;

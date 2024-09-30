@@ -103,14 +103,14 @@ function SaveGoalsForm({ edit }) {
           onInput={(e) => setEndDate(e.target.value)}
           value={endDate}
         />
-        <p>Icon link</p>
+        {/* <p>Icon link</p>
         <input
           id="save-goal-icon"
           type="text"
           placeholder="icon"
           onInput={(e) => setIcon(e.target.value)}
           value={icon}
-        />
+        /> */}
         <button type="submit" className="dark">
           {edit ? "Update Save Goal" : "Create Save Goal"}
         </button>

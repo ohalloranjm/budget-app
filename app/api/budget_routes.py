@@ -146,7 +146,7 @@ def budget(id):
     if not budget:
         return {"error": "Budget not found"}, 404
 
-    return budget.to_dict_simple()
+    return budget.to_dict()
 
 
 # Create a new budget for the current user.
