@@ -1,5 +1,6 @@
 import React from "react";
 import { redirect, useLoaderData, useNavigate } from "react-router-dom";
+import "./TemplatesPage.css";
 
 function TemplatesPage() {
   const { Templates } = useLoaderData() || [];
@@ -12,7 +13,6 @@ function TemplatesPage() {
           onClick={(e) => navigate("/templates/" + t.id)}
         >
           <h2>{t.name}</h2>
-          <div className="template-update-delete"></div>
         </div>
       ))}
       <button className="dark" onClick={() => navigate("/templates/new")}>
