@@ -51,14 +51,23 @@ function TemplateDetails() {
           <button
             className="dark"
             onClick={() =>
-              navigator.clipboard.writeText("/templates/" + template.id)
+              navigator.clipboard.writeText(
+                "https://budget-me.onrender.com/templates/" + template.id
+              )
             }
           >
             Copy Share Link
           </button>
         </>
       ) : (
-        <button>Copy Template</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            const confirmDelete = window.confirm("Feature Coming Soon");
+          }}
+        >
+          Copy Template
+        </button>
       )}
     </div>
   ) : (
