@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate, useSubmit } from 'react-router-dom';
 import './TemplateDetails.css';
@@ -25,6 +25,7 @@ function TemplateDetails() {
       <h2>{template.name}</h2>{' '}
       {budgets.map(b => (
         <div
+          key={b.id}
           className='template-summary-budget'
           onClick={() => navigate('/budgets/' + b.id)}
         >
@@ -64,7 +65,7 @@ function TemplateDetails() {
         <button
           onClick={e => {
             e.preventDefault();
-            const confirmDelete = window.confirm('Feature Coming Soon');
+            window.confirm('Feature Coming Soon');
           }}
         >
           Copy Template

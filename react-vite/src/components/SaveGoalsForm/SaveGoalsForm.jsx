@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { redirect, useLoaderData, useSubmit } from 'react-router-dom';
+import { useState } from 'react';
+import { useLoaderData, useSubmit } from 'react-router-dom';
 import './SaveGoalForm.css';
 import toCents from '../../utils/to-cents';
 
@@ -14,7 +14,7 @@ function SaveGoalsForm({ edit }) {
       ? new Date(data.end_date).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0]
   );
-  const [icon, setIcon] = useState(edit ? data.icon : '');
+  const [icon] = useState(edit ? data.icon : '');
   const [errors, setErrors] = useState({});
   const validateData = data => {
     const validationErrors = {};
