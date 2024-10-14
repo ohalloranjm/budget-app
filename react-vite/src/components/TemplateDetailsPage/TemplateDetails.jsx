@@ -1,37 +1,32 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
-import "./TemplateDetails.css";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLoaderData, useNavigate, useSubmit } from 'react-router-dom';
+import './TemplateDetails.css';
 
 function TemplateDetails() {
   const navigate = useNavigate();
   const { template } = useLoaderData();
   const { Budgets: budgets, Creator: creator } = template;
-  const user = useSelector((store) => store.session.user);
+  const user = useSelector(store => store.session.user);
   const submit = useSubmit();
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const deleter = async (e) => {
+  const deleter = async e => {
     e.preventDefault();
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this Template?"
-    );
-    if (!confirmDelete) {
-      return;
-    }
     submit(
       { id: template.id },
-      { method: "delete", encType: "application/json" }
+      { method: 'delete', encType: 'application/json' }
     );
-    navigate("/templates");
+    navigate('/templates');
   };
 
   return user ? (
-    <div className="template-summary">
-      <h2>{template.name}</h2>{" "}
-      {budgets.map((b) => (
+    <div className='template-summary'>
+      <h2>{template.name}</h2>{' '}
+      {budgets.map(b => (
         <div
-          className="template-summary-budget"
-          onClick={() => navigate("/budgets/" + b.id)}
+          className='template-summary-budget'
+          onClick={() => navigate('/budgets/' + b.id)}
         >
           <p>{b.name}</p>
           <p>${b.allocated}</p>
@@ -39,20 +34,26 @@ function TemplateDetails() {
       ))}
       {user.id === creator.id ? (
         <>
-          <button className="dark" onClick={deleter}>
-            Delete Template
-          </button>
+          {confirmDelete ? (
+            <button className='dark confirm-delete' onClick={deleter}>
+              Confirm Delete
+            </button>
+          ) : (
+            <button className='dark' onClick={() => setConfirmDelete(true)}>
+              Delete Template
+            </button>
+          )}
           <button
-            className="dark"
+            className='dark'
             onClick={() => navigate(`/templates/${template.id}/edit`)}
           >
             Update Template
           </button>
           <button
-            className="dark"
+            className='dark'
             onClick={() =>
               navigator.clipboard.writeText(
-                "https://budget-me.onrender.com/templates/" + template.id
+                'https://budget-me.onrender.com/templates/' + template.id
               )
             }
           >
@@ -61,9 +62,9 @@ function TemplateDetails() {
         </>
       ) : (
         <button
-          onClick={(e) => {
+          onClick={e => {
             e.preventDefault();
-            const confirmDelete = window.confirm("Feature Coming Soon");
+            const confirmDelete = window.confirm('Feature Coming Soon');
           }}
         >
           Copy Template
@@ -71,7 +72,7 @@ function TemplateDetails() {
       )}
     </div>
   ) : (
-    "Not Signed In"
+    'Not Signed In'
   );
 }
 
