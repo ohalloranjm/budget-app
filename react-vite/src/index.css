@@ -72,6 +72,18 @@ button.dark:hover {
   cursor: pointer;
 }
 
+button.confirm-delete {
+  background-color: red;
+  color: azure;
+  text-shadow: none;
+}
+
+button.confirm-delete:hover {
+  background-color: red;
+  color: azure;
+  text-shadow: none;
+}
+
 button.dark:disabled {
   background-color: azure;
   color: rgb(199, 199, 199);
