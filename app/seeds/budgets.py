@@ -22,21 +22,13 @@ demo_budgets = [
     ),
     Budget(
         name='Investing',
-        allocated=5,
+        allocated=20000,
         start_date=datetime.now(),
         end_date=None,
         user_id=1,
         icon='money'
     ),
     Budget(
-        name='Investing',
-        allocated=5,
-        start_date=datetime.now(),
-        end_date=None,
-        user_id=2,
-        icon='money'
-    ),
-        Budget(
         name='Fitness',
         allocated=100000,
         start_date=datetime(2024, 1, 1),
@@ -45,12 +37,20 @@ demo_budgets = [
         icon='fitness'
     ),
     Budget(
-        name='Trave',
+        name='Travel',
         allocated=1000000,
         start_date=datetime(2024, 1, 1),
         end_date=datetime(2024, 12, 30),
         user_id=1,
-        icon='trave'
+        icon='travel'
+    ),
+    Budget(
+        name='Investing',
+        allocated=5,
+        start_date=datetime.now(),
+        end_date=None,
+        user_id=2,
+        icon='money'
     ),
 ]
 
