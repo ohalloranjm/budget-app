@@ -29,6 +29,7 @@ function Footer() {
   const closeMenu = () => setShowMenu(false);
   return (
     <ul className="secondary-dark footer">
+      <p>The devs:</p>
       <li className="footer-button">
         <OpenDevModal
           itemText="Tariq"
