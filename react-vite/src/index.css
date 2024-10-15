@@ -102,3 +102,10 @@ button.dark:disabled:hover {
 .overspent {
   color: rgb(222, 20, 20);
 }
+
+#page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 150px;
+}
