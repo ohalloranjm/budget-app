@@ -50,7 +50,7 @@ textarea {
 }
 
 .template-form-budgets * {
-  min-height: 35px;
+  /* min-height: 35px; */
 }
 
 .template-form-budgets > select {
@@ -59,4 +59,14 @@ textarea {
 
 .template-form-budgets > button {
   width: 29%;
+  height: 100%;
+  margin: 0px;
+}
+
+.template-form-container button {
+  border-radius: 10px;
+}
+
+.template-form-budget > button:hover {
+  cursor: pointer;
 }

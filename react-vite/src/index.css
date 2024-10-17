@@ -107,5 +107,6 @@ button.dark:disabled:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0px 150px;
+  width: 1200px;
+  margin: auto;
 }
