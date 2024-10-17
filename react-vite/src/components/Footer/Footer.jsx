@@ -4,6 +4,7 @@ import OpenDevModal from './OpenDevModal';
 import { useEffect, useRef, useState } from 'react';
 import Tariq from './Tariq';
 import Joy from './Joy';
+import Minyu from './Minyu';
 
 function Footer() {
   const [showMenu, setShowMenu] = useState(false);
@@ -43,6 +44,13 @@ function Footer() {
           itemText='Joy'
           onItemClick={closeMenu}
           modalComponent={<Joy />}
+        />
+      </li>
+      <li>
+        <OpenDevModal
+          itemText='Minyu'
+          onItemClick={closeMenu}
+          modalComponent={<Minyu />}
         />
       </li>
     </ul>
